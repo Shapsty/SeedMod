@@ -1,0 +1,16 @@
+[
+{
+  "modid": "SeedMod",
+  "name": "Seed Mod",
+  "description": "mod to check discrepancies between server world and the seed of the server world. This can be used to detect player activity",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Shapsty"],
+  "credits": "Shapsty, dev; FlamboD2000, dev; xpple, reference.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
