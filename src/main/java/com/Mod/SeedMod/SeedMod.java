@@ -26,4 +26,7 @@ public class SeedMod
         // some example code
         logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
+    private void startClient(){
+        //initalize everything
+    }
 }
