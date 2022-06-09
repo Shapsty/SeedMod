@@ -1,0 +1,5 @@
+These are not listed out in any order other than what I thought of
+
+1. Add like a json file that remembers the seed that they put in.
+2. flesh out Command, commandManger, ShowWorldChanges
+3. Make setSeed command that uses the seed they put in. Could also save to the json in `1.`
