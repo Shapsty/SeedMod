@@ -22,7 +22,7 @@ public class SeedMod  {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
-        // some example code
+        startClient();
         logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
     private void startClient(){
