@@ -23,6 +23,6 @@ public class commandManager {
     }
 
     public static void callCommand(){
-        //some how call a command haven't really thought up how. Maybe with a for each?
+        //some how call a command haven't really thought up how.
     }
 }
