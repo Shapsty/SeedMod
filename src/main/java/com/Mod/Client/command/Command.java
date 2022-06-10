@@ -5,4 +5,5 @@ import net.minecraft.client.Minecraft;
 public abstract class Command {
     protected static final Minecraft mc = Minecraft.getMinecraft();
 
+    //IDK how we could make a command tbh
 }
