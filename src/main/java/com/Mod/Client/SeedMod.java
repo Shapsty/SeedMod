@@ -1,6 +1,7 @@
 package com.Mod.Client;
 
 import com.Mod.Client.command.commandManager;
+import com.Mod.Client.manager.managerLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -39,6 +40,9 @@ public class SeedMod  {
     }
     private void startClient(){
         commandManager.init();
+        logger.info("Finished initialization for commandManager");
+
+        managerLoader.init();
         logger.info("Finished initialization for commandManager");
     }
 }
