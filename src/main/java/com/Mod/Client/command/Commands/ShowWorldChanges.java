@@ -45,7 +45,7 @@ public class ShowWorldChanges extends Command {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
        // final BlockPos center = new BlockPos(mc.player.posX, mc.player.posY - 1, mc.player.posZ); //this may also work
         final BlockPos center = new BlockPos(mc.player.getPosition());
-        final Chunk chunk = mc.player.world.getChunkFromBlockCoords(center);
+        final Chunk chunk = mc.player.getEntityWorld().getChunk(center);
         final ChunkPos chunkPos = chunk.getPos();
 
 
