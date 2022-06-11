@@ -6,7 +6,7 @@ import com.Mod.api.util.chat.messages;
 import java.util.ArrayList;
 
 public class commandManager {
-    public static final String COMMANDPREFIX = "se1";
+    public static final String COMMANDPREFIX = ".";
     public static final ArrayList<Command> commands = new ArrayList<>();
 
     public static void init(){
