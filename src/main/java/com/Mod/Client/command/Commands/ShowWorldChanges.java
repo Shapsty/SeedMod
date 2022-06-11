@@ -29,11 +29,12 @@ public class ShowWorldChanges extends Command {
 
     }
     private static int showChanges(String seed){
+        // before we implement rendering we should we should just print the missing blocks and their coordinates to the chat
+        // next we need to find the chunk the player is in
         BiomeSource biomeSource = BiomeSource.of(Dimension.valueOf(returnPlayerDim()), MCVersion.v1_12_2, Long.parseLong(seed));
         TerrainGenerator generator = TerrainGenerator.of(Dimension.valueOf(returnPlayerDim()), biomeSource);
 
         int blocks = 0;
-        // next we need to find out what chunk the player is in
         return blocks;
     }
     private static String returnPlayerDim(){
