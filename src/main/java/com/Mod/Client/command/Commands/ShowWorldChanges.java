@@ -13,12 +13,12 @@ public class ShowWorldChanges extends Command {
     /*use these as a reference
     https://github.com/seedfinding/mc_terrain_java
     https://github.com/SeedFinding/mc_core_java
-    https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/command/ClientCommand.java
 
+    https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/command/ClientCommand.java
     https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/command/commands/SeedOverlayCommand.java
     https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/command/CustomClientCommandSource.java
 
-    we could also use messagebus for the return messages
+    Use messages.java for sending info to the user via the cha
      */
 
 
