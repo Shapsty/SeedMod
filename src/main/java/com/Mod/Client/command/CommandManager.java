@@ -5,7 +5,7 @@ import com.Mod.api.util.chat.messages;
 
 import java.util.ArrayList;
 
-public class commandManager {
+public class CommandManager {
     public static final String COMMANDPREFIX = ".";
     public static final ArrayList<Command> commands = new ArrayList<>();
 
@@ -44,13 +44,13 @@ public class commandManager {
                 try {
                     command.onCommand(args, args.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
                 } catch (Exception e) {
-                    messages.sendMessageToClientRaw(command.getSyntax());
+                    messages.sendMessageToClientRaw(command.getSyntax(), true);
                 }
             }
         });
 
         if (!isValidCommand) {
-            messages.sendMessageToClientRaw("Error! Invalid command!");
+            messages.sendMessageToClientRaw("Error! Invalid command!", true);
         }
     }
 }

@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 
-@Command.Declaration(name = "SeedOverlay", syntax ="SO [seed]")
+@Command.Declaration(name = "SeedOverlay", syntax ="so [seed]")
 public class ShowWorldChanges extends Command {
     /*use these as a reference
     https://github.com/seedfinding/mc_terrain_java
@@ -29,12 +29,13 @@ public class ShowWorldChanges extends Command {
 
 
     //main seed overlay command thing
+    @Override
     public void onCommand(String command, String[] message){
         String main = message[0];
         String seed = message[1];
 
-        messages.sendMessageToClientRaw("Seed: " + seed);
-        messages.sendMessageToClientRaw(returnPlayerDim().name());
+        messages.sendMessageToClientRaw("Seed: " + seed, true);
+        messages.sendMessageToClientRaw(returnPlayerDim().name(), true);
     }
     private static int showChanges(String seed){
         // before we implement rendering we should just print the missing blocks and their coordinates to the chat

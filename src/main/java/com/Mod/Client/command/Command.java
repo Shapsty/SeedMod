@@ -30,7 +30,7 @@ public abstract class Command {
     }
 
     public String getSyntax() {
-        return commandManager.getCommandPrefix() + this.syntax;
+        return CommandManager.getCommandPrefix() + this.syntax;
     }
 
     public abstract void onCommand(String command, String[] message);

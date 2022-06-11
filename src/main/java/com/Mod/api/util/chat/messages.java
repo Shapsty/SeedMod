@@ -8,9 +8,10 @@ public class messages {
     public static ChatFormatting messageFormatting = ChatFormatting.GOLD;
     protected static final Minecraft mc = Minecraft.getMinecraft();
 
-    public static void sendMessageToClientRaw(String message){
-        TextComponentString string = new TextComponentString(messageFormatting + message);
+    public static void sendMessageToClientRaw(String message, boolean prefix){
+            String watermark1 = prefix ? messageFormatting + "[" + mc.player.getName() + "] " : "";
+            TextComponentString string = new TextComponentString(watermark1 + messageFormatting + message);
 
-        mc.player.sendMessage(string);
+            mc.player.sendMessage(string);
     }
 }
