@@ -5,10 +5,10 @@ import com.Mod.Client.manager.managerLoader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import me.zero.alpine.EventBus;
 import me.zero.alpine.EventManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.Display;
 
 @Mod(modid = SeedMod.MODID, name = SeedMod.NAME, version = SeedMod.VERSION)
 public class SeedMod  {
@@ -28,12 +28,8 @@ public class SeedMod  {
     }
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        logger = event.getModLog();
-    }
-
-    @EventHandler
     public void init(FMLInitializationEvent event) {
+        Display.setTitle(NAME + " " + VERSION);
         logger.info("Starting up " + NAME + " " + VERSION);
         startClient();
         logger.info("Finished initialization for " + NAME + " " + VERSION);
