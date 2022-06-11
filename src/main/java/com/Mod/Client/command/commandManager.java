@@ -26,6 +26,6 @@ public class commandManager {
     }
 
     public static void callCommand(){
-        //some how call a command haven't really thought up how.
+        //somehow call a command haven't really thought up how.
     }
 }
