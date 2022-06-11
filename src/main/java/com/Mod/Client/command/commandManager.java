@@ -1,5 +1,7 @@
 package com.Mod.Client.command;
 
+import com.Mod.Client.command.Commands.ShowWorldChanges;
+
 import java.util.ArrayList;
 
 public class commandManager {
@@ -8,6 +10,7 @@ public class commandManager {
 
     public static void init(){
         //init all commands via addCommand method
+        addCommand(new ShowWorldChanges());
     }
 
     public static void addCommand(Command command) {
