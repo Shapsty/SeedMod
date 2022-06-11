@@ -1,6 +1,6 @@
 package com.Mod.Client;
 
-import net.minecraft.init.Blocks;
+import com.Mod.Client.command.commandManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -14,6 +14,12 @@ public class SeedMod  {
     public static final String VERSION = "1.0";
 
     private static Logger logger;
+    @Mod.Instance
+    public static SeedMod INSTANCE;
+
+    public SeedMod(){
+        INSTANCE = this;
+    }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -22,10 +28,12 @@ public class SeedMod  {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
+        logger.info("Starting up " + NAME + " " + VERSION);
         startClient();
-        logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        logger.info("Finished initialization for " + NAME + " " + VERSION);
     }
     private void startClient(){
-        //initalize everything
+        commandManager.init();
+        logger.info("Finished initialization for commandManager");
     }
 }

@@ -1,6 +1,7 @@
 package com.Mod.Client.command;
 
 import com.Mod.Client.command.Commands.ShowWorldChanges;
+import com.Mod.api.util.chat.messages;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,31 @@ public class commandManager {
         return COMMANDPREFIX;
     }
 
-    public static void callCommand(){
-        //somehow call a command haven't really thought up how.
+    /**
+     * Author 086 for KAMI, regex
+     **/
+
+    public static boolean isValidCommand = false;
+    public static void callCommand(String input) {
+        String[] split = input.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+        String command1 = split[0];
+        String args = input.substring(command1.length()).trim();
+
+        isValidCommand = false;
+
+        commands.forEach(command -> {
+            if (command.getName().equalsIgnoreCase(command1)) {
+                isValidCommand = true;
+                try {
+                    command.onCommand(args, args.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
+                } catch (Exception e) {
+                    messages.sendMessageToClientRaw(command.getSyntax());
+                }
+            }
+        });
+
+        if (!isValidCommand) {
+            messages.sendMessageToClientRaw("Error! Invalid command!");
+        }
     }
 }

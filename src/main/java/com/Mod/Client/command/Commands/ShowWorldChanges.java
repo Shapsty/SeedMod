@@ -2,6 +2,7 @@ package com.Mod.Client.command.Commands;
 
 import com.Mod.Client.command.Command;
 
+import com.Mod.api.util.chat.messages;
 import com.seedfinding.mcbiome.biome.Biome;
 import com.seedfinding.mcbiome.biome.Biomes;
 import com.seedfinding.mcbiome.source.BiomeSource;
@@ -32,10 +33,13 @@ public class ShowWorldChanges extends Command {
         String main = message[0];
         String seed = message[1];
 
+        messages.sendMessageToClientRaw("Seed: " + seed);
+        messages.sendMessageToClientRaw(returnPlayerDim().name());
     }
     private static int showChanges(String seed){
         // before we implement rendering we should just print the missing blocks and their coordinates to the chat
-        // next we need to find the chunk the player is in
+
+        // next we need to find the chunk the player is in, I think I may have done this. It might not work though
         BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
         TerrainGenerator generator = TerrainGenerator.of(returnPlayerDim(), biomeSource);
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
