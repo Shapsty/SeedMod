@@ -1,12 +1,17 @@
 package com.Mod.Client.command.Commands;
 
 import com.Mod.Client.command.Command;
+
 import com.seedfinding.mcbiome.biome.Biome;
 import com.seedfinding.mcbiome.biome.Biomes;
 import com.seedfinding.mcbiome.source.BiomeSource;
 import com.seedfinding.mccore.state.Dimension;
 import com.seedfinding.mccore.version.MCVersion;
 import com.seedfinding.mcterrain.TerrainGenerator;
+
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.chunk.Chunk;
 
 @Command.Declaration(name = "SeedOverlay", syntax ="SO [seed]")
 public class ShowWorldChanges extends Command {
@@ -33,6 +38,13 @@ public class ShowWorldChanges extends Command {
         // next we need to find the chunk the player is in
         BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
         TerrainGenerator generator = TerrainGenerator.of(returnPlayerDim(), biomeSource);
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+       // final BlockPos center = new BlockPos(mc.player.posX, mc.player.posY - 1, mc.player.posZ); //this may also work
+        final BlockPos center = new BlockPos(mc.player.getPosition());
+        final Chunk chunk = mc.player.world.getChunkFromBlockCoords(center);
+        final ChunkPos chunkPos = chunk.getPos();
+
+
 
         int blocks = 0;
         return blocks;
