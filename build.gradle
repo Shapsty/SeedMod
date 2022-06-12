@@ -13,7 +13,6 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 version project.modVersion
 group project.modGroup // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'SeedMod'
 
 //compileJava {
 //    sourceCompatibility = targetCompatibility = '1.8'
@@ -61,14 +60,18 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    jarLibs
+}
+
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
-    compile ('com.seedfinding:mc_terrain:9e937ddb838e28e79423c287fa18b1ce66f061d7')
-    compile('com.seedfinding:mc_biome:533cdb5ed955ff1c3106f9901aea6aa5b08fd781')
-    compile ('com.github.ZeroMemes:Alpine:1.5')
+    jarLibs ('com.seedfinding:mc_terrain:9e937ddb838e28e79423c287fa18b1ce66f061d7')
+    jarLibs ('com.seedfinding:mc_biome:533cdb5ed955ff1c3106f9901aea6aa5b08fd781')
+    jarLibs ('com.github.ZeroMemes:Alpine:1.5')
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
@@ -99,6 +102,11 @@ jar {
                 'ModVersion': '${project.version}'
         )
     }
+    from(
+            configurations.jarLibs.collect {
+                it.isDirectory() ? it : zipTree(it)
+            }
+    )
 }
 
 // Example configuration to allow publishing using the maven-publish task
