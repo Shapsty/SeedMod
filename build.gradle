@@ -30,6 +30,7 @@ minecraft {
         client {
             workingDirectory project.file('run')
 
+            property 'fml.coreMods.load', 'com.Mod.mixin.SeedModMixinLoader'
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
@@ -78,8 +79,12 @@ dependencies {
 }
 
 mixin {
-    defaultObfuscationEnv searge
-    add sourceSets.main, 'mixins.SeedMod.refmap.json'
+    defaultObfuscationEnv  'searge'
+    sourceSets {
+        main {
+            ext.refMap = 'mixins.SeedMod.refmap.json'
+        }
+    }
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
