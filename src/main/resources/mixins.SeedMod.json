@@ -1,3 +1,11 @@
 {
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "",
+  "refmap": "mixins.SeedMod.refmap.json",
+  "mixins":[
+
+  ]
 
 }
+
