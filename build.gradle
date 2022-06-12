@@ -1,16 +1,20 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://repo.spongepowered.org/maven/' }
         mavenCentral()
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
+
 version project.modVersion
 group project.modGroup // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
@@ -57,21 +61,28 @@ repositories {
         name = 'impactdevelopment-repo'
         url = 'https://impactdevelopment.github.io/maven/'
     }
+    maven {
+        name = 'spongepowered-repo'
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
     mavenCentral()
 }
 
-configurations {
-    jarLibs
-}
 
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
-    jarLibs ('com.seedfinding:mc_terrain:9e937ddb838e28e79423c287fa18b1ce66f061d7')
-    jarLibs ('com.seedfinding:mc_biome:533cdb5ed955ff1c3106f9901aea6aa5b08fd781')
-    jarLibs ('com.github.ZeroMemes:Alpine:1.5')
+    compile ('org.spongepowered:mixin:0.7.4-SNAPSHOT') {
+        exclude module: 'launchwrapper'
+        exclude module: 'guava'
+        exclude module: 'gson'
+        exclude module: 'commons-io'
+    }
+    compile ('com.seedfinding:mc_terrain:9e937ddb838e28e79423c287fa18b1ce66f061d7')
+    compile ('com.seedfinding:mc_biome:533cdb5ed955ff1c3106f9901aea6aa5b08fd781')
+    compile ('com.github.ZeroMemes:Alpine:1.5')
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
@@ -97,16 +108,12 @@ dependencies {
 jar {
     manifest {
         attributes(
+                'tweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
                 'ForceLoadAsMod': 'true',
                 'ModName': 'SeedMod',
                 'ModVersion': '${project.version}'
         )
     }
-    from(
-            configurations.jarLibs.collect {
-                it.isDirectory() ? it : zipTree(it)
-            }
-    )
 }
 
 // Example configuration to allow publishing using the maven-publish task
