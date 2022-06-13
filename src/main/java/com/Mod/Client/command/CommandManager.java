@@ -44,13 +44,13 @@ public class CommandManager {
                 try {
                     command.onCommand(args, args.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
                 } catch (Exception e) {
-                    messages.sendMessageToClientRaw(command.getSyntax(), true);
+                    messages.sendCommandMessage(command.getSyntax(), true);
                 }
             }
         });
 
         if (!isValidCommand) {
-            messages.sendMessageToClientRaw("Error! Invalid command!", true);
+            messages.sendCommandMessage("Error! Invalid command!", true);
         }
     }
 }

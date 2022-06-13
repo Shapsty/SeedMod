@@ -21,7 +21,7 @@ public enum ClientEventManager implements Manager {
                 CommandManager.callCommand(event.getMessage().substring(1));
             } catch (Exception e) {
                 e.printStackTrace();
-                messages.sendMessageToClientRaw(ChatFormatting.DARK_RED + "Error: " + e.getMessage(), true);
+                messages.sendCommandMessage(ChatFormatting.DARK_RED + "Error: " + e.getMessage(), true);
             }
         }
     }

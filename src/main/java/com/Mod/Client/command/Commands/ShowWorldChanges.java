@@ -34,8 +34,8 @@ public class ShowWorldChanges extends Command {
         String main = message[0];
         String seed = message[1];
 
-        messages.sendMessageToClientRaw("Seed: " + seed, true);
-        messages.sendMessageToClientRaw(returnPlayerDim().name(), true);
+        messages.sendCommandMessage("Seed: " + seed, true);
+        messages.sendCommandMessage(returnPlayerDim().name(), true);
     }
     private static int showChanges(String seed){
         // before we implement rendering we should just print the missing blocks and their coordinates to the chat
