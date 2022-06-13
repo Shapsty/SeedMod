@@ -78,6 +78,8 @@ dependencies {
     }
     jarLibs ('com.seedfinding:mc_terrain:9e937ddb838e28e79423c287fa18b1ce66f061d7')
     jarLibs ('com.seedfinding:mc_biome:533cdb5ed955ff1c3106f9901aea6aa5b08fd781')
+    jarLibs('com.seedfinding:mc_seed:5518e3ba3ee567fb0b51c15958967f70a6a19e02')
+    jarLibs('com.seedfinding:mc_core:d685a37f0a466d4bf800e7f285daf9ef73c81678')
     implementation configurations.jarLibs
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
