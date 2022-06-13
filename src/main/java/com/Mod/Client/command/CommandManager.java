@@ -1,17 +1,19 @@
 package com.Mod.Client.command;
 
+import com.Mod.Client.command.Commands.PrefixCommand;
 import com.Mod.Client.command.Commands.ShowWorldChanges;
 import com.Mod.api.util.chat.messages;
 
 import java.util.ArrayList;
 
 public class CommandManager {
-    public static final String COMMANDPREFIX = ";";
+    public static String COMMANDPREFIX = ";";
     public static final ArrayList<Command> commands = new ArrayList<>();
 
     public static void init(){
         //init all commands via addCommand method
         addCommand(new ShowWorldChanges());
+        addCommand(new PrefixCommand());
     }
 
     public static void addCommand(Command command) {
@@ -24,6 +26,10 @@ public class CommandManager {
 
     public static String getCommandPrefix() {
         return COMMANDPREFIX;
+    }
+
+    public static void setCommandPrefix(String prefix) {
+        COMMANDPREFIX = prefix;
     }
 
     /**

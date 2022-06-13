@@ -8,14 +8,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 public abstract class Command {
+
     protected static final Minecraft mc = Minecraft.getMinecraft();
 
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.TYPE)
     public @interface Declaration {
         String name();
+
         String syntax();
 
+        String[] alias();
     }
 
     private Declaration getDeclaration() {
@@ -23,6 +26,7 @@ public abstract class Command {
     }
 
     private final String name = getDeclaration().name();
+    private final String[] alias = getDeclaration().alias();
     private final String syntax = getDeclaration().syntax();
 
     public String getName() {
@@ -31,6 +35,10 @@ public abstract class Command {
 
     public String getSyntax() {
         return CommandManager.getCommandPrefix() + this.syntax;
+    }
+
+    public String[] getAlias() {
+        return this.alias;
     }
 
     public abstract void onCommand(String command, String[] message);

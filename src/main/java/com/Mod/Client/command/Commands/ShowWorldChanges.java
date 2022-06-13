@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 
-@Command.Declaration(name = "SeedOverlay", syntax ="so [seed]")
+@Command.Declaration(name = "SeedOverlay", syntax ="so [seed]", alias = {"so", "seedoverlay"})
 public class ShowWorldChanges extends Command {
     /*use these as a reference
     https://github.com/seedfinding/mc_terrain_java
