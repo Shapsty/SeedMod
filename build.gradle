@@ -1,8 +1,12 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net/' }
-        maven { url = 'https://repo.spongepowered.org/maven/' }
         mavenCentral()
+        maven {
+            url = 'https://maven.minecraftforge.net/'
+        }
+        maven {
+            url = 'https://repo.spongepowered.org/repository/maven-public'
+        }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
@@ -11,36 +15,14 @@ buildscript {
 }
 
 apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'org.spongepowered.mixin'
 
 version project.modVersion
-group project.modGroup // http://maven.apache.org/guides/mini/guide-naming-conventions.html
- // Need this here so eclipse task generates correctly.
+group project.modGroup
+
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
     options.encoding = 'UTF-8'
-}
-
-configurations {
-    jarLibs
-}
-minecraft {
-
-    mappings channel: "$mappingsChannel", version: "$mappingsVersion"
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            property 'fml.coreMods.load', 'com.Mod.mixin.SeedModMixinLoader'
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-        }
-    }
 }
 
 repositories {
@@ -54,32 +36,48 @@ repositories {
         name = 'impactdevelopment-repo'
         url = 'https://impactdevelopment.github.io/maven/'
     }
-    maven {
-        name = 'spongepowered-repo'
-        url = 'https://repo.spongepowered.org/repository/maven-public/'
-    }
+    maven { url = 'https://repo.spongepowered.org/maven/' }
+    maven { url = 'https://jitpack.io' }
     mavenCentral()
 }
 
+minecraft {
+    mappings channel: "$mappingsChannel", version: "$mappingsVersion"
 
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'fml.coreMods.load', 'com.Mod.mixin.SeedModMixinLoader'
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+        }
+    }
+}
+
+configurations {
+    jarLibs
+}
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
-    jarLibs ('org.spongepowered:mixin:0.7.4-SNAPSHOT') {
-        exclude module: 'launchwrapper'
-        exclude module: 'guava'
-        exclude module: 'gson'
+    minecraft "net.minecraftforge:forge:$minecraftVersion-$forgeVersion"
+
+    jarLibs('org.spongepowered:mixin:0.8.5') {
         exclude module: 'commons-io'
+        exclude module: 'gson'
+        exclude module: 'guava'
     }
-    //super secret I want to kill myself way to get mixin working
+    jarLibs  "com.github.ZeroMemes:Alpine:1.5"
+
+    // Hacky way to get mixin work
     annotationProcessor('org.spongepowered:mixin:0.8.5:processor') {
         exclude module: 'gson'
     }
     jarLibs ('com.seedfinding:mc_terrain:9e937ddb838e28e79423c287fa18b1ce66f061d7')
     jarLibs ('com.seedfinding:mc_biome:533cdb5ed955ff1c3106f9901aea6aa5b08fd781')
-    jarLibs ('com.github.ZeroMemes:Alpine:1.5')
     implementation configurations.jarLibs
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
@@ -87,14 +85,13 @@ dependencies {
 }
 
 mixin {
-    defaultObfuscationEnv  'searge'
+    defaultObfuscationEnv 'searge'
     sourceSets {
         main {
             ext.refMap = 'mixins.SeedMod.refmap.json'
         }
     }
 }
-
 processResources {
     exclude '**/rawimagefiles'
 
@@ -104,28 +101,20 @@ processResources {
         expand version: version, 'mcversion': minecraftVersion
     }
 }
-
-// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes(
+                'Manifest-Version': 1.0,
                 'MixinConfigs': 'mixins.SeedMod.json',
-                'tweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-                'TweakOrder': 0,
+                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+                'FMLCorePluginContainsFMLMod': 'true',
                 'FMLCorePlugin': 'com.Mod.mixin.SeedModMixinLoader',
                 'ForceLoadAsMod': 'true',
-                'ModName': 'SeedMod',
-                'ModVersion': '${project.version}'
         )
-    }
-    from(
+        from{
             configurations.jarLibs.collect {
-                it.isDirectory() ? it : zipTree(it)}
-    )
+                it.isDirectory() ? it : zipTree(it)
+            }
+        }
+    }
 }
-
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
-//jar.finalizedBy('reobfJar')
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
