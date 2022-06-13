@@ -1,3 +1,6 @@
+//basically skidded from https://github.com/lambda-client/lambda/blob/master/build.gradle because I dont understand gradle,
+//this probably the source of all my problems
+
 buildscript {
     repositories {
         mavenCentral()
