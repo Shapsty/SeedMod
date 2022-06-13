@@ -3,10 +3,10 @@ package com.Mod.Client;
 import com.Mod.Client.command.CommandManager;
 import com.Mod.Client.manager.managerLoader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import me.zero.alpine.EventBus;
 import me.zero.alpine.EventManager;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
 
@@ -18,7 +18,7 @@ public class SeedMod  {
 
     public static final EventBus EVENT_BUS = new EventManager();
 
-    private static Logger logger;
+    private static final Logger logger = LogManager.getLogger(NAME);
 
     @Mod.Instance
     public static SeedMod INSTANCE;
@@ -27,7 +27,7 @@ public class SeedMod  {
         INSTANCE = this;
     }
 
-    @EventHandler
+    @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         Display.setTitle(NAME + " " + VERSION);
         logger.info("Starting up " + NAME + " " + VERSION);
