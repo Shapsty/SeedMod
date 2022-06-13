@@ -121,6 +121,20 @@ task apiJar(type: Jar) {
 }
 
 jar {
+    from{
+        exclude '**/module-info.class',
+                'DebugProbesKt.bin',
+                'META-INF/proguard/**',
+                'META-INF/versions/**',
+                'META-INF/**.RSA',
+                'META-INF/com.android.tools/**',
+                'META-INF/*.kotlin_module',
+                'kotlin/**/*.kotlin_metadata',
+                'kotlin/**/*.kotlin_builtins',
+                'META-INF/*.version'
+        configurations.jarLibs.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
     manifest {
         attributes(
                 'Manifest-Version': 1.0,
@@ -128,12 +142,8 @@ jar {
                 'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
                 'FMLCorePluginContainsFMLMod': 'true',
                 'FMLCorePlugin': 'com.Mod.mixin.SeedModMixinLoader',
-                'ForceLoadAsMod': 'true',
+                'ForceLoadAsMod': 'true'
         )
-        from{
-            configurations.jarLibs.collect {
-                it.isDirectory() ? it : zipTree(it)
-            }
         }
     }
 }
