@@ -83,6 +83,7 @@ dependencies {
     jarLibs ('com.seedfinding:mc_biome:533cdb5ed955ff1c3106f9901aea6aa5b08fd781')
     jarLibs('com.seedfinding:mc_seed:5518e3ba3ee567fb0b51c15958967f70a6a19e02')
     jarLibs('com.seedfinding:mc_core:d685a37f0a466d4bf800e7f285daf9ef73c81678')
+
     implementation configurations.jarLibs
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
@@ -124,7 +125,17 @@ task apiJar(type: Jar) {
 }
 
 jar {
-    from{
+    manifest {
+        attributes(
+                'Manifest-Version': 1.0,
+                'MixinConfigs': 'mixins.SeedMod.json',
+                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+                'FMLCorePluginContainsFMLMod': 'true',
+                'FMLCorePlugin': 'com.Mod.mixin.SeedModMixinLoader',
+                'ForceLoadAsMod': 'true'
+        )
+    }
+    from {
         exclude '**/module-info.class',
                 'DebugProbesKt.bin',
                 'META-INF/proguard/**',
@@ -137,16 +148,6 @@ jar {
                 'META-INF/*.version'
         configurations.jarLibs.collect {
             it.isDirectory() ? it : zipTree(it)
-        }
-    manifest {
-        attributes(
-                'Manifest-Version': 1.0,
-                'MixinConfigs': 'mixins.SeedMod.json',
-                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-                'FMLCorePluginContainsFMLMod': 'true',
-                'FMLCorePlugin': 'com.Mod.mixin.SeedModMixinLoader',
-                'ForceLoadAsMod': 'true'
-        )
         }
     }
 }

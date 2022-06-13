@@ -1,8 +1,10 @@
 package com.Mod.Client.command;
 
+import com.Mod.Client.SeedMod;
 import com.Mod.Client.command.Commands.PrefixCommand;
 import com.Mod.Client.command.Commands.ShowWorldChanges;
 import com.Mod.api.util.chat.messages;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
 
@@ -12,6 +14,9 @@ public class CommandManager {
 
     public CommandManager(){
         //init all commands via addCommand method
+        MinecraftForge.EVENT_BUS.register(this);
+        SeedMod.EVENT_BUS.subscribe(this);
+
         addCommand(new ShowWorldChanges());
         addCommand(new PrefixCommand());
     }

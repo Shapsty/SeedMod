@@ -1,5 +1,6 @@
 package com.Mod.Client.manager.managers;
 
+import com.Mod.Client.SeedMod;
 import com.Mod.Client.command.CommandManager;
 import com.Mod.Client.manager.Manager;
 
@@ -24,6 +25,7 @@ public enum ClientEventManager implements Manager {
                 messages.sendCommandMessage(ChatFormatting.DARK_RED + "Error: " + e.getMessage(), true);
             }
         }
+        SeedMod.EVENT_BUS.post(this);
         messages.sendCommandMessage(event.getMessage(), true);
     }
 }

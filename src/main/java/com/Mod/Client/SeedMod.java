@@ -2,10 +2,11 @@ package com.Mod.Client;
 
 import com.Mod.Client.command.CommandManager;
 import com.Mod.Client.manager.managerLoader;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import me.zero.alpine.EventBus;
 import me.zero.alpine.EventManager;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
@@ -14,7 +15,7 @@ import org.lwjgl.opengl.Display;
 public class SeedMod  {
     public static final String MODID = "SeedMod";
     public static final String NAME = "Seed Mod";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "1.1";
 
     public static managerLoader managerLoad;
     public static CommandManager CommandMang;
@@ -32,6 +33,7 @@ public class SeedMod  {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(this);
         Display.setTitle(NAME + " " + VERSION);
 
         logger.info("Starting up " + NAME + " " + VERSION);
