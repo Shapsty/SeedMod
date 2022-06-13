@@ -10,9 +10,12 @@ import java.util.List;
 public class managerLoader {
     private static final List<Manager> managers = new ArrayList<>();
 
-    public static void init() {
+    public managerLoader(){
         register(ClientEventManager.INSTANCE);
     }
+    //public static void init() {
+    //    register(ClientEventManager.INSTANCE);
+    //}
 
     private static void register(Manager manager) {
         managers.add(manager);

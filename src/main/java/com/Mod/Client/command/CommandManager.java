@@ -10,7 +10,7 @@ public class CommandManager {
     public static String COMMANDPREFIX = ";";
     public static final ArrayList<Command> commands = new ArrayList<>();
 
-    public static void init(){
+    public CommandManager(){
         //init all commands via addCommand method
         addCommand(new ShowWorldChanges());
         addCommand(new PrefixCommand());
