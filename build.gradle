@@ -22,6 +22,9 @@ compileJava {
     options.encoding = 'UTF-8'
 }
 
+configurations {
+    jarLibs
+}
 minecraft {
 
     mappings channel: "$mappingsChannel", version: "$mappingsVersion"
@@ -64,7 +67,7 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
-    compile ('org.spongepowered:mixin:0.7.4-SNAPSHOT') {
+    jarLibs ('org.spongepowered:mixin:0.7.4-SNAPSHOT') {
         exclude module: 'launchwrapper'
         exclude module: 'guava'
         exclude module: 'gson'
@@ -74,9 +77,10 @@ dependencies {
     annotationProcessor('org.spongepowered:mixin:0.8.5:processor') {
         exclude module: 'gson'
     }
-    compile ('com.seedfinding:mc_terrain:9e937ddb838e28e79423c287fa18b1ce66f061d7')
-    compile ('com.seedfinding:mc_biome:533cdb5ed955ff1c3106f9901aea6aa5b08fd781')
-    compile ('com.github.ZeroMemes:Alpine:1.5')
+    jarLibs ('com.seedfinding:mc_terrain:9e937ddb838e28e79423c287fa18b1ce66f061d7')
+    jarLibs ('com.seedfinding:mc_biome:533cdb5ed955ff1c3106f9901aea6aa5b08fd781')
+    jarLibs ('com.github.ZeroMemes:Alpine:1.5')
+    implementation configurations.jarLibs
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
@@ -108,12 +112,16 @@ jar {
                 'MixinConfigs': 'mixins.SeedMod.json',
                 'tweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
                 'TweakOrder': 0,
-                'ForceLoadAsMod': 'true',
                 'FMLCorePlugin': 'com.Mod.mixin.SeedModMixinLoader',
+                'ForceLoadAsMod': 'true',
                 'ModName': 'SeedMod',
                 'ModVersion': '${project.version}'
         )
     }
+    from(
+            configurations.jarLibs.collect {
+                it.isDirectory() ? it : zipTree(it)}
+    )
 }
 
 // Example configuration to allow publishing using the maven-publish task
