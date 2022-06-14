@@ -6,12 +6,14 @@ import me.zero.alpine.EventBus;
 import me.zero.alpine.EventManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
 
-@Mod(modid = SeedMod.MODID, name = SeedMod.NAME, version = SeedMod.VERSION)
+@Mod(modid = SeedMod.MODID, name = SeedMod.NAME, version = SeedMod.VERSION, dependencies = "required-after:forge@[14.23.5.2860,);")
 public class SeedMod  {
     public static final String MODID = "SeedMod";
     public static final String NAME = "Seed Mod";
@@ -24,14 +26,14 @@ public class SeedMod  {
 
     private static final Logger logger = LogManager.getLogger(NAME);
 
-    @Mod.Instance
+    @Instance
     public static SeedMod INSTANCE;
 
     public SeedMod(){
         INSTANCE = this;
     }
 
-    @Mod.EventHandler
+    @EventHandler
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
         Display.setTitle(NAME + " " + VERSION);
