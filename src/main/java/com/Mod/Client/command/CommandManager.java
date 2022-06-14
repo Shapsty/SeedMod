@@ -51,12 +51,14 @@ public class CommandManager {
         isValidCommand = false;
 
         commands.forEach(command -> {
-            if (command.getName().equalsIgnoreCase(command1)) {
-                isValidCommand = true;
-                try {
-                    command.onCommand(args, args.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
-                } catch (Exception e) {
-                    messages.sendCommandMessage(command.getSyntax(), true);
+            for (String string : command.getAlias()) {
+                if (string.equalsIgnoreCase(command1)) {
+                    isValidCommand = true;
+                    try {
+                        command.onCommand(args, args.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
+                    } catch (Exception e) {
+                        messages.sendCommandMessage(command.getSyntax(), true);
+                    }
                 }
             }
         });

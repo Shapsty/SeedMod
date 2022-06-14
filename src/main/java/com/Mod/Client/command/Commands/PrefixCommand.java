@@ -9,12 +9,11 @@ public class PrefixCommand extends Command {
 
     public void onCommand(String command, String[] message) {
         String main = message[0].toUpperCase().replaceAll("[a-zA-Z0-9]", null);
-        int size = message[0].length();
 
-        if (main != null && size == 1) {
+        if (main != null && message.length == 1) {
             CommandManager.setCommandPrefix(main);
             messages.sendCommandMessage("Prefix set: \"" + main + "\"!", true);
-        } else if (size != 1) {
+        } else if (message.length != 1) {
             messages.sendCommandMessage(this.getSyntax(), true);
         }
     }
