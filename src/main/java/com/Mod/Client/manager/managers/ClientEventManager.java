@@ -4,11 +4,7 @@ import com.Mod.Client.command.Command;
 import com.Mod.Client.command.CommandManager;
 import com.Mod.Client.manager.Manager;
 
-import me.zero.alpine.listener.EventHandler;
-import me.zero.alpine.listener.Listener;
-
 import com.Mod.api.util.chat.messages;
-import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

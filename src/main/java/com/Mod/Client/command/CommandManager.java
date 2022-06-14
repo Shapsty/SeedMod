@@ -4,7 +4,6 @@ import com.Mod.Client.SeedMod;
 import com.Mod.Client.command.Commands.CmdListCommand;
 import com.Mod.Client.command.Commands.PrefixCommand;
 import com.Mod.Client.command.Commands.ShowWorldChanges;
-import com.Mod.api.util.chat.messages;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
