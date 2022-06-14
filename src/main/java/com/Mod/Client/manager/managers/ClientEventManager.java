@@ -1,5 +1,6 @@
 package com.Mod.Client.manager.managers;
 
+import com.Mod.Client.command.Command;
 import com.Mod.Client.command.CommandManager;
 import com.Mod.Client.manager.Manager;
 
@@ -15,16 +16,35 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public enum ClientEventManager implements Manager {
     INSTANCE;
 
+
+    /*
+        *srgantmoomoo for OnChatSent body
+     */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChatSent(ClientChatEvent event) {
-        if (event.getMessage().startsWith(CommandManager.getCommandPrefix())) {
-            event.setCanceled(true);
-            try {
-                getMinecraft().ingameGUI.getChatGUI().addToSentMessages(event.getMessage());
-                CommandManager.callCommand(event.getMessage().substring(1));
-            } catch (Exception e) {
-                e.printStackTrace();
-                messages.sendCommandMessage(ChatFormatting.DARK_RED + "Error: " + e.getMessage(), true);
+        String message = event.getMessage();
+
+        if (!event.getMessage().startsWith(CommandManager.getCommandPrefix())) {
+            return;
+        }
+        event.setCanceled(true);
+        message = message.substring(CommandManager.COMMANDPREFIX.length());
+
+        if(message.split(" ").length > 0) {
+            boolean commandFound = false;
+            String commandName = message.split(" ")[0];
+
+            for (Command command : CommandManager.getCommands()) {
+                for (String string : command.getAlias()) {
+                    if (string.equalsIgnoreCase(commandName)) {
+                        commandFound = true;
+                        try {
+                            command.onCommand(message, message.split(" "));
+                        } catch (Exception e) {
+                            messages.sendCommandMessage(command.getSyntax(), true);
+                        }
+                    }
+                }
             }
         }
     }

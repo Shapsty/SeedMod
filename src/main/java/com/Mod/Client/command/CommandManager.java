@@ -1,6 +1,7 @@
 package com.Mod.Client.command;
 
 import com.Mod.Client.SeedMod;
+import com.Mod.Client.command.Commands.CmdListCommand;
 import com.Mod.Client.command.Commands.PrefixCommand;
 import com.Mod.Client.command.Commands.ShowWorldChanges;
 import com.Mod.api.util.chat.messages;
@@ -19,6 +20,7 @@ public class CommandManager {
 
         addCommand(new ShowWorldChanges());
         addCommand(new PrefixCommand());
+        addCommand(new CmdListCommand());
     }
 
     public static void addCommand(Command command) {
@@ -35,36 +37,5 @@ public class CommandManager {
 
     public static void setCommandPrefix(String prefix) {
         COMMANDPREFIX = prefix;
-    }
-
-    /**
-     * Author 086 for KAMI, regex
-     **/
-
-    public static boolean isValidCommand = false;
-
-    public static void callCommand(String input) {
-        String[] split = input.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-        String command1 = split[0];
-        String args = input.substring(command1.length()).trim();
-
-        isValidCommand = false;
-
-        commands.forEach(command -> {
-            for (String string : command.getAlias()) {
-                if (string.equalsIgnoreCase(command1)) {
-                    isValidCommand = true;
-                    try {
-                        command.onCommand(args, args.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
-                    } catch (Exception e) {
-                        messages.sendCommandMessage(command.getSyntax(), true);
-                    }
-                }
-            }
-        });
-
-        if (!isValidCommand) {
-            messages.sendCommandMessage("Error! Invalid command!", true);
-        }
     }
 }
