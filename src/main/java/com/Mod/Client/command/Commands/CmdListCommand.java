@@ -9,7 +9,7 @@ public class CmdListCommand extends Command {
 
     public void onCommand(String command, String[] message) {
         for (Command command1 : CommandManager.getCommands()) {
-            messages.sendCommandMessage(command1.getName() + ": " + "\"" + command1.getSyntax() + "\"!", true);
+            messages.sendCommandMessage(command1.getName() + ": " +  command1.getSyntax(), true);
         }
     }
 }

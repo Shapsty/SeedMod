@@ -1,5 +1,7 @@
 package com.Mod.Client.command.Commands;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
+
 import com.Mod.Client.command.Command;
 import com.Mod.Client.command.CommandManager;
 import com.Mod.api.util.chat.messages;
@@ -8,13 +10,13 @@ import com.Mod.api.util.chat.messages;
 public class PrefixCommand extends Command {
 
     public void onCommand(String command, String[] message) {
-        String main = message[0].toUpperCase().replaceAll("[a-zA-Z0-9]", null);
+        if (message.length > 1 ){
+            String newPrefix = message[1];
 
-        if (main != null && message.length == 1) {
-            CommandManager.setCommandPrefix(main);
-            messages.sendCommandMessage("Prefix set: \"" + main + "\"!", true);
-        } else if (message.length != 1) {
-            messages.sendCommandMessage(this.getSyntax(), true);
+            CommandManager.COMMANDPREFIX = newPrefix;
+            messages.sendCommandMessage("Prefix set to " + ChatFormatting.WHITE + CommandManager.COMMANDPREFIX + ChatFormatting.LIGHT_PURPLE, true);
+        } else {
+            messages.sendCommandMessage(this.getSyntax(), false);
         }
     }
 }
