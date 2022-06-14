@@ -1,8 +1,10 @@
 package com.Mod.Client.manager.managers;
 
-import com.Mod.Client.SeedMod;
 import com.Mod.Client.command.CommandManager;
 import com.Mod.Client.manager.Manager;
+
+import me.zero.alpine.listener.EventHandler;
+import me.zero.alpine.listener.Listener;
 
 import com.Mod.api.util.chat.messages;
 import com.mojang.realmsclient.gui.ChatFormatting;
@@ -25,7 +27,5 @@ public enum ClientEventManager implements Manager {
                 messages.sendCommandMessage(ChatFormatting.DARK_RED + "Error: " + e.getMessage(), true);
             }
         }
-        SeedMod.EVENT_BUS.post(this);
-        messages.sendCommandMessage(event.getMessage(), true);
     }
 }
