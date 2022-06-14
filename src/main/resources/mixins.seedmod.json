@@ -2,7 +2,7 @@
   "required": true,
   "compatibilityLevel": "JAVA_8",
   "package": "com.Mod.mixin.mixins",
-  "refmap": "mixins.SeedMod.refmap.json",
+  "refmap": "mixins.seedmod.refmap.json",
   "mixins":[
     "MixinGuiMainMenu"
   ]

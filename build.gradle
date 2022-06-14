@@ -94,7 +94,7 @@ mixin {
     defaultObfuscationEnv 'searge'
     sourceSets {
         main {
-            ext.refMap = 'mixins.SeedMod.refmap.json'
+            ext.refMap = 'mixins.seedmod.refmap.json'
         }
     }
 }
@@ -128,7 +128,7 @@ jar {
     manifest {
         attributes(
                 'Manifest-Version': 1.0,
-                'MixinConfigs': 'mixins.SeedMod.json',
+                'MixinConfigs': 'mixins.seedmod.json',
                 'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
                 'FMLCorePluginContainsFMLMod': 'true',
                 'FMLCorePlugin': 'com.Mod.mixin.SeedModMixinLoader',

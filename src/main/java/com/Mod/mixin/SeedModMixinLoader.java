@@ -16,7 +16,7 @@ public class SeedModMixinLoader implements IFMLLoadingPlugin {
 
     public SeedModMixinLoader() {
         MixinBootstrap.init();
-        Mixins.addConfiguration("mixins.SeedMod.json");
+        Mixins.addConfiguration("mixins.seedmod.json");
         MixinEnvironment.getDefaultEnvironment().setObfuscationContext("searge");
     }
 

@@ -15,7 +15,7 @@ import org.lwjgl.opengl.Display;
 
 @Mod(modid = SeedMod.MODID, name = SeedMod.NAME, version = SeedMod.VERSION, dependencies = "required-after:forge@[14.23.5.2860,);")
 public class SeedMod  {
-    public static final String MODID = "SeedMod";
+    public static final String MODID = "seedmod";
     public static final String NAME = "Seed Mod";
     public static final String VERSION = "1.1";
 
