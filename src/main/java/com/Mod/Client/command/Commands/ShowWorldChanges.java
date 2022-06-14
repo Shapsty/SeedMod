@@ -14,17 +14,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 
+import java.util.HashMap;
+
 @Command.Declaration(name = "SeedOverlay", syntax ="so [seed]", alias = {"so", "seedoverlay"})
 public class ShowWorldChanges extends Command {
     /*use these as a reference
     https://github.com/seedfinding/mc_terrain_java
     https://github.com/SeedFinding/mc_core_java
 
-    https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/command/ClientCommand.java
     https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/command/commands/SeedOverlayCommand.java
-    https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/command/CustomClientCommandSource.java
-
-    Use messages.java for sending info to the user via the cha
+    https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/util/maps/SimpleBlockMap.java
      */
 
 
@@ -34,28 +33,39 @@ public class ShowWorldChanges extends Command {
         String main = message[0];
         String seed = message[1];
 
+        final BlockPos center = new BlockPos(mc.player.getPosition());
+        final Chunk chunk = mc.player.getEntityWorld().getChunk(center);
+        final ChunkPos chunkPos = chunk.getPos();
+
         if (main == null || seed == null){
             messages.sendCommandMessage(this.getSyntax(), true);
             return;
         }
         messages.sendCommandMessage("Seed: " + seed, true);
-        //messages.sendCommandMessage(returnPlayerDim().name(), true);
+        messages.sendCommandMessage(returnPlayerDim().name(), true);
+        messages.sendCommandMessage(String.valueOf(center), true);
+        messages.sendCommandMessage(String.valueOf(chunk), true);
+        messages.sendCommandMessage(String.valueOf(chunkPos), true);
     }
     private static int showChanges(String seed){
         // before we implement rendering we should just print the missing blocks and their coordinates to the chat
 
-        // next we need to find the chunk the player is in, I think I may have done this. It might not work though
         BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
         TerrainGenerator generator = TerrainGenerator.of(returnPlayerDim(), biomeSource);
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-       // final BlockPos center = new BlockPos(mc.player.posX, mc.player.posY - 1, mc.player.posZ); //this may also work
         final BlockPos center = new BlockPos(mc.player.getPosition());
+        //final WorldChunk chunk = mc.player.getWorld().getChunk(center.getX() >> 4, center.getZ() >> 4); This doesn't work for 1.12 but this is what we are trying to implement
         final Chunk chunk = mc.player.getEntityWorld().getChunk(center);
         final ChunkPos chunkPos = chunk.getPos();
 
-
-
+        //this also doesnt work for 1.12 but this is what we are trying to implement
+        //Map<Box, String> boxes = new HashMap<>();
         int blocks = 0;
+        for (int x = chunkPos.getXStart(); x <= chunkPos.getXEnd(); x++){
+            for (int z = chunkPos.getZStart(); x <= chunkPos.getZEnd(); z++){
+
+            }
+        }
         return blocks;
     }
     private static Dimension returnPlayerDim(){
