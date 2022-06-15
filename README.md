@@ -8,7 +8,7 @@ but this will change.
 Mod for finding changes to the world compared to the seed.
 
 # Issues
-1. NONE that I know of
+1. ShowWorldChanges only loops through the first for loop 175 and doesnt loop through any of the embedded loops
 
 # TODO
 1. Make SimpleBlockMap
