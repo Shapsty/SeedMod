@@ -10,7 +10,8 @@ import com.seedfinding.mcbiome.source.BiomeSource;
 import com.seedfinding.mccore.state.Dimension;
 import com.seedfinding.mccore.version.MCVersion;
 import com.seedfinding.mcterrain.TerrainGenerator;
-import net.minecraft.util.text.*;
+
+import com.Mod.Client.SeedMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -37,10 +38,6 @@ public class ShowWorldChanges extends Command {
         String main = message[0];
         String seed = message[1];
 
-        final BlockPos center = new BlockPos(mc.player.getPosition());
-        final Chunk chunk = mc.player.getEntityWorld().getChunk(center);
-        final ChunkPos chunkPos = chunk.getPos();
-
         if (main == null || seed == null) {
             messages.sendCommandMessage(this.getSyntax(), true);
             return;
@@ -58,56 +55,50 @@ public class ShowWorldChanges extends Command {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         final BlockPos center = new BlockPos(mc.player.getPosition());
         final SimpleBlockMap map = new SimpleBlockMap(MCVersion.v1_12_2, returnPlayerDim(), Biomes.PLAINS);
-        //final WorldChunk chunk = mc.player.getWorld().getChunk(center.getX() >> 4, center.getZ() >> 4); This doesn't work for 1.12 but this is what we are trying to implement
-        final Chunk chunk = mc.player.getEntityWorld().getChunk(center);
+        final Chunk chunk = mc.world.getChunk(center.getX() >> 4, center.getZ() >> 4);
         final ChunkPos chunkPos = chunk.getPos();
 
         //this also doesnt work for 1.12 but this is what we are trying to implement
         //Map<Box, String> boxes = new HashMap<>();
         int blocks = 0;
         messages.sendCommandMessage("1.12 Seed Overlay Started", true);
+
+        //these embedded for loops are inf looping. Z increases forever and x never changes.
         for (int x = chunkPos.getXStart(); x <= chunkPos.getXEnd(); x++) {
-            messages.sendCommandMessage("first for", true);
-            messages.sendCommandMessage("X" + x, true);
-            messages.sendCommandMessage("Start X" + chunkPos.getXStart(), true);
-            messages.sendCommandMessage("endX" + chunkPos.getXEnd(), true);
+            SeedMod.logger.info(chunkPos.getXStart() + " " + chunkPos.getZStart());
+            SeedMod.logger.info(chunkPos.getXEnd() + " " + chunkPos.getZEnd());
 
-            for (int z = chunkPos.getZStart(); x <= chunkPos.getZEnd(); z++) {
-                messages.sendCommandMessage("Second for", true);
-                messages.sendCommandMessage("Set Pos should be here", true);
-
+            for (int z = chunkPos.getZStart(); z <= chunkPos.getZEnd(); z++) {
                 final com.seedfinding.mccore.block.Block[] column = generator.getColumnAt(x, z);
                 final Biome biome = biomeSource.getBiome(x, 0, z);
-                messages.sendCommandMessage("init column:" + column.length + " and biome: " + biome.getName(), true);
+                SeedMod.logger.info("init column:" + column.length + " and biome: " + biome.getName());
 
-                //issue is on this line below this comment
                 map.setBiome(biome);
 
-                messages.sendCommandMessage("Set Biome", true);
+                SeedMod.logger.info("Set Biome");
                 for (int y = 0; y < column.length; y++) {
-                    messages.sendCommandMessage("Third for", true);
                     mutable.setPos(x, y, z);
-
-                    messages.sendCommandMessage("Set Y", true);
+                    SeedMod.logger.info("Mutable: " + mutable);
 
                     final Block terrainBlock = chunk.getBlockState(mutable).getBlock();
                     String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getPath();
-                    messages.sendCommandMessage("Found BlockName", true);
+                    SeedMod.logger.info("Found BlockName");
 
                     if (map.get(terrainBlock) == column[y].getId()) {
+                        SeedMod.logger.info("Block is the same");
                         continue;
                     }
-                    messages.sendCommandMessage("Block at " + mutable.toString() + " is " + terrainBlockName, true);
+                    messages.sendCommandMessage("Block at " + mutable + " is " + terrainBlockName, true);
                     blocks++;
-                    messages.sendCommandMessage("incremented", true);
+                    SeedMod.logger.info("incremented");
                 }
             }
         }
         if (blocks > 0) {
-            messages.sendCommandMessage(String.valueOf(blocks) + " do not match", true);
+            messages.sendCommandMessage(blocks + " do not match", true);
         }
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
-        return blocks;
+        return 123;
     }
     private static Dimension returnPlayerDim(){
         Dimension playerDim = Dimension.OVERWORLD;

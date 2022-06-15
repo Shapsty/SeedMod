@@ -24,7 +24,7 @@ public class SeedMod  {
 
     public static final EventBus EVENT_BUS = new EventManager();
 
-    private static final Logger logger = LogManager.getLogger(NAME);
+    public static final Logger logger = LogManager.getLogger(NAME);
 
     @Instance
     public static SeedMod INSTANCE;
