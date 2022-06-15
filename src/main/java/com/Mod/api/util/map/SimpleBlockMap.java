@@ -2,7 +2,6 @@ package com.Mod.api.util.map;
 
 import com.google.common.collect.ImmutableMap;
 import com.seedfinding.mcbiome.biome.Biome;
-import com.seedfinding.mccore.block.Blocks;
 import com.seedfinding.mccore.state.Dimension;
 import com.seedfinding.mccore.version.MCVersion;
 import net.minecraft.block.Block;
@@ -12,7 +11,6 @@ import java.util.Map;
 import static com.seedfinding.mcbiome.biome.Biomes.*;
 import static net.minecraft.init.Blocks.*;
 
-import java.util.Map;
 
 public class SimpleBlockMap {
     private static final Map<MCVersion, Map<Biome, Map<Block, Integer>>> versionedBiomeMap = ImmutableMap.<MCVersion, Map<Biome, Map<Block, Integer>>>builder()
@@ -673,7 +671,7 @@ public class SimpleBlockMap {
     }
 
     public SimpleBlockMap(Dimension dimension, Biome biome) {
-        this(MCVersion.v1_16_5, dimension, biome);
+        this(MCVersion.v1_12_2, dimension, biome);
     }
 
     public SimpleBlockMap(MCVersion mcVersion, Dimension dimension, Biome biome) {
@@ -682,7 +680,7 @@ public class SimpleBlockMap {
     }
 
     public void setBiome(Biome biome) {
-        this.map = versionedBiomeMap.get(MCVersion.v1_16_5).get(biome);
+        this.map = versionedBiomeMap.get(MCVersion.v1_12_2).get(biome);
     }
 
     public int get(Block block) {
