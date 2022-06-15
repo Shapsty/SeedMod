@@ -85,7 +85,7 @@ public class ShowWorldChanges extends Command {
                     messages.sendCommandMessage("Set Y", true);
                     final Block terrainBlock = chunk.getBlockState(mutable).getBlock();
                     String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getPath();
-                    messages.sendCommandMessage("Set Y 5", true);
+                    messages.sendCommandMessage("Found BlockName", true);
                     if (map.get(terrainBlock) == column[y].getId()) {
                         continue;
                     }
