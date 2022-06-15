@@ -88,7 +88,7 @@ public class ShowWorldChanges extends Command {
                         SeedMod.logger.info("Block is the same");
                         continue;
                     }
-                    messages.sendCommandMessage("Block at " + mutable + " is " + terrainBlockName, true);
+                    messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
                     blocks++;
                     SeedMod.logger.info("incremented");
                 }
@@ -98,7 +98,7 @@ public class ShowWorldChanges extends Command {
             messages.sendCommandMessage(blocks + " do not match", true);
         }
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
-        return 123;
+        return blocks;
     }
     private static Dimension returnPlayerDim(){
         Dimension playerDim = Dimension.OVERWORLD;

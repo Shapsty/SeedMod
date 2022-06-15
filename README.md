@@ -8,7 +8,7 @@ but this will change.
 Mod for finding changes to the world compared to the seed.
 
 # Issues
-1. SeedOverlay says everyblock is not meant to be there,
+1. SeedOverlay says every block is not meant to be there and its missing some blocks or its saying that every block that is meant to be there is not meant to be there,
 I assume this can improved upon by improving SimpleBlockMap.
 
 # TODO

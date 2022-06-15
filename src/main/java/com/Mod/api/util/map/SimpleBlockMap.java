@@ -61,6 +61,7 @@ public class SimpleBlockMap {
                             .put(LOG, 0)
                             .put(LEAVES, 0)
                             .put(DOUBLE_PLANT, 0)
+                            .put(STONE, 0)
 
                             .put(GRASS, 0)
                             .build()
