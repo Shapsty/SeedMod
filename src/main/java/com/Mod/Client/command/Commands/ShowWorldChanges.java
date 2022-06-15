@@ -95,8 +95,8 @@ public class ShowWorldChanges extends Command {
                 }
             }
         }
-        if (blocks > 0) {
-            messages.sendCommandMessage("There are " + String.valueOf(blocks) + " blocks that are different from the seed", true);
+        if (blocks == 0) {
+            messages.sendCommandMessage(String.valueOf(blocks) + "do not match", true);
         }
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
         return blocks;
