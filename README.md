@@ -11,9 +11,9 @@ Mod for finding changes to the world compared to the seed.
 1. ShowWorldChanges only loops through the first for loop 175 and doesnt loop through any of the embedded loops
 
 # TODO
-1. Make SimpleBlockMap
-2. Actually do the SeedOverlay command
-This requires well doing it, we should start off just by printing all
+1. Improve SimpleBlockMap
+2. Fix the SeedOverlay command
+Fix the for loop issue mentioned in `Issues`, we should start off just by printing all
 of the blocks that dont match into chat before we try and render them.
 
 3. Render the SeedOverlay
