@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 @Command.Declaration(name = "SeedOverlay", syntax ="so [seed]", alias = {"so", "seedoverlay"})
@@ -45,10 +46,6 @@ public class ShowWorldChanges extends Command {
             return;
         }
         messages.sendCommandMessage("Seed: " + seed, true);
-        messages.sendCommandMessage(returnPlayerDim().name(), true);
-        messages.sendCommandMessage(String.valueOf(center), true);
-        messages.sendCommandMessage(String.valueOf(chunk), true);
-        messages.sendCommandMessage(String.valueOf(chunkPos), true);
         showChanges("-4684036758601247941");
     }
 
@@ -71,21 +68,32 @@ public class ShowWorldChanges extends Command {
         messages.sendCommandMessage("1.12 Seed Overlay Started", true);
         for (int x = chunkPos.getXStart(); x <= chunkPos.getXEnd(); x++) {
             messages.sendCommandMessage("first for", true);
-            messages.sendCommandMessage(String.valueOf(x), true);
+            messages.sendCommandMessage("X" + x, true);
+            messages.sendCommandMessage("Start X" + chunkPos.getXStart(), true);
+            messages.sendCommandMessage("endX" + chunkPos.getXEnd(), true);
+
             for (int z = chunkPos.getZStart(); x <= chunkPos.getZEnd(); z++) {
                 messages.sendCommandMessage("Second for", true);
-                messages.sendCommandMessage("Set Pos 123", true);
+                messages.sendCommandMessage("Set Pos should be here", true);
+
                 final com.seedfinding.mccore.block.Block[] column = generator.getColumnAt(x, z);
                 final Biome biome = biomeSource.getBiome(x, 0, z);
+                messages.sendCommandMessage("init column:" + column.length + " and biome: " + biome.getName(), true);
+
+                //issue is on this line below this comment
                 map.setBiome(biome);
+
                 messages.sendCommandMessage("Set Biome", true);
                 for (int y = 0; y < column.length; y++) {
                     messages.sendCommandMessage("Third for", true);
                     mutable.setPos(x, y, z);
+
                     messages.sendCommandMessage("Set Y", true);
+
                     final Block terrainBlock = chunk.getBlockState(mutable).getBlock();
                     String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getPath();
                     messages.sendCommandMessage("Found BlockName", true);
+
                     if (map.get(terrainBlock) == column[y].getId()) {
                         continue;
                     }
