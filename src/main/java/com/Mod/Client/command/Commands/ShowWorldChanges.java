@@ -18,7 +18,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 @Command.Declaration(name = "SeedOverlay", syntax ="so [seed]", alias = {"so", "seedoverlay"})
@@ -85,6 +84,8 @@ public class ShowWorldChanges extends Command {
                     SeedMod.logger.info("Found BlockName");
 
                     if (map.get(terrainBlock) == column[y].getId()) {
+                        SeedMod.logger.info("Terraain block "+ map.get(terrainBlock));
+                        SeedMod.logger.info("column id " + column[y].getId());
                         SeedMod.logger.info("Block is the same");
                         continue;
                     }
