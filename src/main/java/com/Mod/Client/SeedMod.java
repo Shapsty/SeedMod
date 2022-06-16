@@ -17,7 +17,7 @@ import org.lwjgl.opengl.Display;
 public class SeedMod  {
     public static final String MODID = "seedmod";
     public static final String NAME = "Seed Mod";
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "b.77";
 
     public static managerLoader managerLoad;
     public static CommandManager CommandMang;
