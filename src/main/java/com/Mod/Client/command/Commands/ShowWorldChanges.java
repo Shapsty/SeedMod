@@ -4,6 +4,8 @@ import com.Mod.Client.command.Command;
 
 import com.Mod.api.util.chat.messages;
 import com.Mod.api.util.map.SimpleBlockMap;
+import com.Mod.api.util.render.RenderUtil;
+import com.Mod.api.util.render.SeedModColor;
 import com.seedfinding.mcbiome.biome.Biome;
 import com.seedfinding.mcbiome.biome.Biomes;
 import com.seedfinding.mcbiome.source.BiomeSource;
@@ -19,6 +21,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Command.Declaration(name = "SeedOverlay", syntax ="so [seed]", alias = {"so", "seedoverlay"})
 public class ShowWorldChanges extends Command {
@@ -50,6 +53,8 @@ public class ShowWorldChanges extends Command {
         messages.sendCommandMessage("1.12 Seed Overlay init", true);
 
         BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
+        int opacityGradient = 100;
+        SeedModColor containerColor = new SeedModColor(255, 255, 0, opacityGradient);
         TerrainGenerator generator = TerrainGenerator.of(returnPlayerDim(), biomeSource);
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         final BlockPos center = new BlockPos(mc.player.getPosition());
@@ -58,7 +63,7 @@ public class ShowWorldChanges extends Command {
         final ChunkPos chunkPos = chunk.getPos();
 
         //this also doesn't work for 1.12 but this is what we are trying to implement
-        //Map<Box, String> boxes = new HashMap<>();
+        Map<BlockPos.MutableBlockPos,String> boxes = new HashMap<>();
         int blocks = 0;
         messages.sendCommandMessage("1.12 Seed Overlay Started", true);
 
@@ -89,6 +94,7 @@ public class ShowWorldChanges extends Command {
                         SeedMod.logger.info("Block is the same");
                         continue;
                     }
+                    boxes.put(mutable, terrainBlockName);
                     messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
                     blocks++;
                     SeedMod.logger.info("incremented");
@@ -97,8 +103,9 @@ public class ShowWorldChanges extends Command {
         }
         if (blocks > 0) {
             messages.sendCommandMessage(blocks + " do not match", true);
+            boxes.forEach((key, value) -> RenderUtil.drawBoundingBox(mc.world.getBlockState(key).getSelectedBoundingBox(mc.world, key), 2, containerColor));
+
         }
-        //rendering goes here
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
         return blocks;
     }
