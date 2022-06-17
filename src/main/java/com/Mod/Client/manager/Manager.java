@@ -3,6 +3,7 @@ package com.Mod.Client.manager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.profiler.Profiler;
 
 public interface Manager {
     default Minecraft getMinecraft() {
@@ -16,4 +17,6 @@ public interface Manager {
     default WorldClient getWorld() {
         return getMinecraft().world;
     }
+
+    default Profiler getProfiler() {return getMinecraft().profiler;}
 }
