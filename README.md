@@ -8,7 +8,7 @@ but this will change.
 Mod for finding changes to the world compared to the seed.
 
 # Issues
-1. It says a lot of blocks that are supposed to be there shouldn't be. IDK how to fix this
+1.  Underground cave air blocks are marked as changed.
 
 # TODO
 1. fix issue 1
