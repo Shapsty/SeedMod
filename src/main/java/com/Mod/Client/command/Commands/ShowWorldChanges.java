@@ -9,6 +9,7 @@ import com.Mod.api.util.render.SeedModColor;
 import com.seedfinding.mcbiome.biome.Biome;
 import com.seedfinding.mcbiome.biome.Biomes;
 import com.seedfinding.mcbiome.source.BiomeSource;
+import com.seedfinding.mccore.block.Blocks;
 import com.seedfinding.mccore.state.Dimension;
 import com.seedfinding.mccore.version.MCVersion;
 import com.seedfinding.mcterrain.TerrainGenerator;
@@ -53,8 +54,7 @@ public class ShowWorldChanges extends Command {
         messages.sendCommandMessage("1.12 Seed Overlay Started", true);
 
         BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
-        int opacityGradient = 100;
-        SeedModColor containerColor = new SeedModColor(255, 255, 0, opacityGradient);
+        SeedModColor containerColor = new SeedModColor(255, 255, 0, 100);
         TerrainGenerator generator = TerrainGenerator.of(returnPlayerDim(), biomeSource);
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         final BlockPos center = new BlockPos(mc.player.getPosition());
@@ -62,31 +62,24 @@ public class ShowWorldChanges extends Command {
         final Chunk chunk = mc.world.getChunk(center.getX() >> 4, center.getZ() >> 4);
         final ChunkPos chunkPos = chunk.getPos();
 
-        //this also doesn't work for 1.12 but this is what we are trying to implement
         Map<BlockPos.MutableBlockPos,String> boxes = new HashMap<>();
         int blocks = 0;
         messages.sendCommandMessage("1.12 Seed Overlay Started", true);
 
-        //these embedded for loops are inf looping. Z increases forever and x never changes.
         for (int x = chunkPos.getXStart(); x <= chunkPos.getXEnd(); x++) {
-            SeedMod.logger.info(chunkPos.getXStart() + " " + chunkPos.getZStart());
-            SeedMod.logger.info(chunkPos.getXEnd() + " " + chunkPos.getZEnd());
 
             for (int z = chunkPos.getZStart(); z <= chunkPos.getZEnd(); z++) {
                 final com.seedfinding.mccore.block.Block[] column = generator.getColumnAt(x, z);
                 final Biome biome = biomeSource.getBiome(x, 0, z);
-                SeedMod.logger.info("init column:" + column.length + " and biome: " + biome.getName());
 
                 map.setBiome(biome);
 
                 SeedMod.logger.info("Set Biome");
                 for (int y = 0; y < column.length; y++) {
                     mutable.setPos(x, y, z);
-                    SeedMod.logger.info("Mutable: " + mutable);
 
                     final Block terrainBlock = chunk.getBlockState(mutable).getBlock();
                     String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getPath();
-                    SeedMod.logger.info("Found BlockName");
 
                     if (map.get(terrainBlock) == column[y].getId()) {
                         SeedMod.logger.info("Terrain block "+ map.get(terrainBlock));
@@ -95,15 +88,17 @@ public class ShowWorldChanges extends Command {
                         continue;
                     }
                     boxes.put(mutable, terrainBlockName);
-                    messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
-                    blocks++;
-                    SeedMod.logger.info("incremented");
+                    if (map.get(terrainBlock) != column[y].getId()) {
+                        messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
+                        blocks++;
+                        SeedMod.logger.info("incremented");
+                    }
                 }
             }
         }
         if (blocks > 0) {
             messages.sendCommandMessage(blocks + " do not match", true);
-            boxes.forEach((key, value) -> RenderUtil.drawBoundingBox(mc.world.getBlockState(key).getSelectedBoundingBox(mc.world, key), 2, containerColor));
+            //boxes.forEach((key, value) -> RenderUtil.drawBoundingBox(mc.world.getBlockState(key).getSelectedBoundingBox(mc.world, key), 2, containerColor));
 
         }
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
