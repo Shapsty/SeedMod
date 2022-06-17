@@ -14,6 +14,10 @@ import static net.minecraft.init.Blocks.*;
 
 
 public class SimpleBlockMap {
+
+    /*
+     * xpple for basically this entire file I only changed a few things
+     */
     private static final int AIR_ID = Blocks.AIR.getId();
     private static final int STONE_ID = Blocks.STONE.getId();
     private static final int END_STONE_ID = Blocks.END_STONE.getId();
@@ -630,7 +634,6 @@ public class SimpleBlockMap {
     private static final Map<MCVersion, Map<Block, Integer>> overworld = ImmutableMap.<MCVersion, Map<Block, Integer>>builder()
             .put(MCVersion.v1_12_2, ImmutableMap.<Block, Integer>builder()
                     .put(AIR, AIR_ID)
-                    //.put(BEDROCK, 7)
                     .put(BEDROCK, STONE_ID)
                     .put(STONE, STONE_ID)
                     .put(DIRT, STONE_ID)

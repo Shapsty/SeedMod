@@ -9,7 +9,6 @@ import com.Mod.api.util.render.SeedModColor;
 import com.seedfinding.mcbiome.biome.Biome;
 import com.seedfinding.mcbiome.biome.Biomes;
 import com.seedfinding.mcbiome.source.BiomeSource;
-import com.seedfinding.mccore.block.Blocks;
 import com.seedfinding.mccore.state.Dimension;
 import com.seedfinding.mccore.version.MCVersion;
 import com.seedfinding.mcterrain.TerrainGenerator;
@@ -29,9 +28,6 @@ public class ShowWorldChanges extends Command {
     /*use these as a reference
     https://github.com/seedfinding/mc_terrain_java
     https://github.com/SeedFinding/mc_core_java
-
-    https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/command/commands/SeedOverlayCommand.java
-    https://github.com/xpple/SeedMapper/blob/master/src/main/java/dev/xpple/seedmapper/util/maps/SimpleBlockMap.java
      */
 
 
@@ -49,10 +45,14 @@ public class ShowWorldChanges extends Command {
         showChanges("-4684036758601247941");
     }
 
+    /*
+    * xpple for basis of showChanges
+     */
     private static int showChanges(String seed) {
         // before we implement rendering we should just print the missing blocks and their coordinates to the chat
         messages.sendCommandMessage("1.12 Seed Overlay Started", true);
 
+        final int AIR_ID = com.seedfinding.mccore.block.Blocks.AIR.getId();
         BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
         SeedModColor containerColor = new SeedModColor(255, 255, 0, 100);
         TerrainGenerator generator = TerrainGenerator.of(returnPlayerDim(), biomeSource);
@@ -87,18 +87,21 @@ public class ShowWorldChanges extends Command {
                         SeedMod.logger.info("Block is the same");
                         continue;
                     }
-                    boxes.put(mutable, terrainBlockName);
-                    if (map.get(terrainBlock) != column[y].getId()) {
-                        messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
-                        blocks++;
-                        SeedMod.logger.info("incremented");
+                    //temp fix while I figure out how to use predicates On Maps
+                    if (map.get(terrainBlock) == AIR_ID && mutable.getY() <= 40){
+                        SeedMod.logger.info("Block is air");
+                        continue;
                     }
+                    boxes.put(mutable, terrainBlockName);
+                    messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
+                    blocks++;
+                    SeedMod.logger.info("incremented");
                 }
             }
         }
         if (blocks > 0) {
             messages.sendCommandMessage(blocks + " do not match", true);
-            //boxes.forEach((key, value) -> RenderUtil.drawBoundingBox(mc.world.getBlockState(key).getSelectedBoundingBox(mc.world, key), 2, containerColor));
+            boxes.forEach((key, value) -> RenderUtil.drawBoundingBox(mc.world.getBlockState(key).getSelectedBoundingBox(mc.world, key), 2, containerColor));
 
         }
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
