@@ -8,9 +8,8 @@ but this will change.
 Mod for finding changes to the world compared to the seed.
 
 # Issues
-1. SeedOverlay says every block is not meant to be there and its missing some blocks or its saying that every block that is meant to be there is not meant to be there,
-I assume this can improved upon by improving SimpleBlockMap.
+1. It says a lot of blocks that are supposed to be there shouldn't be. IDK how to fix this
 
 # TODO
-1. Fix SimpleBlockMap
-2. Render the SeedOverlay
+1. fix issue 1
+2. Figure out how to render shis

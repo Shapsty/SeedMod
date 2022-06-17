@@ -50,7 +50,7 @@ public class ShowWorldChanges extends Command {
 
     private static int showChanges(String seed) {
         // before we implement rendering we should just print the missing blocks and their coordinates to the chat
-        messages.sendCommandMessage("1.12 Seed Overlay init", true);
+        messages.sendCommandMessage("1.12 Seed Overlay Started", true);
 
         BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
         int opacityGradient = 100;
