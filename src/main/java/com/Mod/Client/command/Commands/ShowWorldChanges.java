@@ -57,7 +57,7 @@ public class ShowWorldChanges extends Command {
         final Chunk chunk = mc.world.getChunk(center.getX() >> 4, center.getZ() >> 4);
         final ChunkPos chunkPos = chunk.getPos();
 
-        //this also doesnt work for 1.12 but this is what we are trying to implement
+        //this also doesn't work for 1.12 but this is what we are trying to implement
         //Map<Box, String> boxes = new HashMap<>();
         int blocks = 0;
         messages.sendCommandMessage("1.12 Seed Overlay Started", true);
@@ -84,7 +84,7 @@ public class ShowWorldChanges extends Command {
                     SeedMod.logger.info("Found BlockName");
 
                     if (map.get(terrainBlock) == column[y].getId()) {
-                        SeedMod.logger.info("Terraain block "+ map.get(terrainBlock));
+                        SeedMod.logger.info("Terrain block "+ map.get(terrainBlock));
                         SeedMod.logger.info("column id " + column[y].getId());
                         SeedMod.logger.info("Block is the same");
                         continue;
@@ -98,6 +98,7 @@ public class ShowWorldChanges extends Command {
         if (blocks > 0) {
             messages.sendCommandMessage(blocks + " do not match", true);
         }
+        //rendering goes here
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
         return blocks;
     }

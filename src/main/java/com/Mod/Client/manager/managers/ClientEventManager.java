@@ -12,9 +12,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public enum ClientEventManager implements Manager {
     INSTANCE;
 
-
     /*
-        *srgantmoomoo for OnChatSent body
+     *srgantmoomoo for Main body of code in onChatSent
      */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void onChatSent(ClientChatEvent event) {
@@ -27,13 +26,11 @@ public enum ClientEventManager implements Manager {
         message = message.substring(CommandManager.COMMANDPREFIX.length());
 
         if(message.split(" ").length > 0) {
-            boolean commandFound = false;
             String commandName = message.split(" ")[0];
 
             for (Command command : CommandManager.getCommands()) {
                 for (String string : command.getAlias()) {
                     if (string.equalsIgnoreCase(commandName)) {
-                        commandFound = true;
                         try {
                             command.onCommand(message, message.split(" "));
                         } catch (Exception e) {
