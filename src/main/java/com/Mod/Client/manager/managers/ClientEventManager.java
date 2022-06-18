@@ -6,12 +6,20 @@ import com.Mod.Client.manager.Manager;
 
 import com.Mod.api.util.chat.messages;
 import net.minecraftforge.client.event.ClientChatEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public enum ClientEventManager implements Manager {
     INSTANCE;
 
+
+    //WIP
+    @SubscribeEvent
+    public void onWorldRender(RenderWorldLastEvent event){
+        if (event.isCanceled()) return;
+        if (getMinecraft().player == null || getMinecraft().world == null) return;
+    }
     /*
      *srgantmoomoo for Main body of code in onChatSent
      */

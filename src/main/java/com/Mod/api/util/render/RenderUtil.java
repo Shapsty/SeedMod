@@ -9,6 +9,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL32;
+
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glHint;
 
 public class RenderUtil {
 
@@ -56,5 +60,34 @@ public class RenderUtil {
 
     private static void colorVertex(double x, double y, double z, SeedModColor color, int alpha, BufferBuilder bufferbuilder) {
         bufferbuilder.pos(x - mc.getRenderManager().viewerPosX, y - mc.getRenderManager().viewerPosY, z - mc.getRenderManager().viewerPosZ).color(color.getRed(), color.getGreen(), color.getBlue(), alpha).endVertex();
+    }
+
+    public static void prepare() {
+        glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_NICEST);
+        GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, GL11.GL_ZERO, GL11.GL_ONE);
+        GlStateManager.shadeModel(GL11.GL_SMOOTH);
+        GlStateManager.depthMask(false);
+        GlStateManager.enableBlend();
+        GlStateManager.disableDepth();
+        GlStateManager.disableTexture2D();
+        GlStateManager.disableLighting();
+        GlStateManager.disableCull();
+        GlStateManager.enableAlpha();
+        glEnable(GL11.GL_LINE_SMOOTH);
+        glEnable(GL32.GL_DEPTH_CLAMP);
+    }
+
+    public static void release() {
+        GL11.glDisable(GL32.GL_DEPTH_CLAMP);
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GlStateManager.enableAlpha();
+        GlStateManager.enableCull();
+        GlStateManager.enableTexture2D();
+        GlStateManager.enableDepth();
+        GlStateManager.disableBlend();
+        GlStateManager.depthMask(true);
+        GlStateManager.glLineWidth(1.0f);
+        GlStateManager.shadeModel(GL11.GL_FLAT);
+        glHint(GL11.GL_LINE_SMOOTH_HINT, GL11.GL_DONT_CARE);
     }
 }
