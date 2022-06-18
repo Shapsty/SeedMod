@@ -13,7 +13,7 @@ public class PrefixCommand extends Command {
         if (message.length > 1 ){
             String newPrefix = message[1];
 
-            CommandManager.COMMANDPREFIX = newPrefix;
+            CommandManager.setCommandPrefix(newPrefix);
             messages.sendCommandMessage("Prefix set to " + ChatFormatting.WHITE + CommandManager.COMMANDPREFIX + ChatFormatting.LIGHT_PURPLE, true);
         } else {
             messages.sendCommandMessage(this.getSyntax(), false);

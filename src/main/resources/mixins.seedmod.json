@@ -4,7 +4,8 @@
   "package": "com.Mod.mixin.mixins",
   "refmap": "mixins.seedmod.refmap.json",
   "mixins":[
-    "MixinGuiMainMenu"
+    "MixinGuiMainMenu",
+    "MixinRenderGlobal"
   ]
 
 }

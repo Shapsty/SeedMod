@@ -19,6 +19,8 @@ public abstract class Command {
         String syntax();
 
         String[] alias();
+
+        boolean enabled() default false;
     }
 
     private Declaration getDeclaration() {
@@ -28,6 +30,7 @@ public abstract class Command {
     private final String name = getDeclaration().name();
     private final String[] alias = getDeclaration().alias();
     private final String syntax = getDeclaration().syntax();
+    private boolean enabled = getDeclaration().enabled();
 
     public String getName() {
         return this.name;
@@ -39,6 +42,14 @@ public abstract class Command {
 
     public String[] getAlias() {
         return this.alias;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public abstract void onCommand(String command, String[] message);

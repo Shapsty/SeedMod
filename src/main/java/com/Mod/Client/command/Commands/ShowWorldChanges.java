@@ -1,5 +1,6 @@
 package com.Mod.Client.command.Commands;
 
+import com.Mod.Client.SeedMod;
 import com.Mod.Client.command.Command;
 
 import com.Mod.api.util.chat.messages;
@@ -12,8 +13,6 @@ import com.seedfinding.mcbiome.source.BiomeSource;
 import com.seedfinding.mccore.state.Dimension;
 import com.seedfinding.mccore.version.MCVersion;
 import com.seedfinding.mcterrain.TerrainGenerator;
-
-import com.Mod.Client.SeedMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -41,8 +40,10 @@ public class ShowWorldChanges extends Command {
             messages.sendCommandMessage(this.getSyntax(), true);
             return;
         }
+        setEnabled(true);
         messages.sendCommandMessage("Seed: " + seed, true);
         showChanges("-4684036758601247941");
+        setEnabled(false);
     }
 
     /*
@@ -64,7 +65,6 @@ public class ShowWorldChanges extends Command {
 
         Map<BlockPos.MutableBlockPos,String> boxes = new HashMap<>();
         int blocks = 0;
-        messages.sendCommandMessage("1.12 Seed Overlay Started", true);
 
         for (int x = chunkPos.getXStart(); x <= chunkPos.getXEnd(); x++) {
 
@@ -74,7 +74,6 @@ public class ShowWorldChanges extends Command {
 
                 map.setBiome(biome);
 
-                SeedMod.logger.info("Set Biome");
                 for (int y = 0; y < column.length; y++) {
                     mutable.setPos(x, y, z);
 
@@ -82,27 +81,22 @@ public class ShowWorldChanges extends Command {
                     String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getPath();
 
                     if (map.get(terrainBlock) == column[y].getId()) {
-                        SeedMod.logger.info("Terrain block "+ map.get(terrainBlock));
-                        SeedMod.logger.info("column id " + column[y].getId());
-                        SeedMod.logger.info("Block is the same");
                         continue;
                     }
-                    //temp fix while I figure out how to use predicates On Maps
+                    //temp fix while I figure out how to use predicates On Maps or alternate how terrain generates
                     if (map.get(terrainBlock) == AIR_ID && mutable.getY() <= 40){
-                        SeedMod.logger.info("Block is air");
                         continue;
                     }
                     boxes.put(mutable, terrainBlockName);
+                    SeedMod.logger.info(boxes);
                     messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
                     blocks++;
-                    SeedMod.logger.info("incremented");
                 }
             }
         }
         if (blocks > 0) {
             messages.sendCommandMessage(blocks + " do not match", true);
             boxes.forEach((key, value) -> RenderUtil.drawBoundingBox(mc.world.getBlockState(key).getSelectedBoundingBox(mc.world, key), 2, containerColor));
-
         }
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
         return blocks;

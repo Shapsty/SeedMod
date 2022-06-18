@@ -7,6 +7,7 @@ import com.Mod.Client.command.Commands.ShowWorldChanges;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CommandManager {
     public static String COMMANDPREFIX = ";";
@@ -36,5 +37,22 @@ public class CommandManager {
 
     public static void setCommandPrefix(String prefix) {
         COMMANDPREFIX = prefix;
+    }
+
+    public static Command getCommand(String name) {
+        if (name == null) return null;
+        for (Command command : commands) {
+            for (String string : command.getAlias()) {
+                if (string.equalsIgnoreCase(name)) {
+                    return command;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static boolean isCommandEnabled(String name) {
+        Command comm = getCommand(name);
+        return comm != null && comm.isEnabled();
     }
 }
