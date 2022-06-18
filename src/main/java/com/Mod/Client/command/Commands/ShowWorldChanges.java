@@ -1,8 +1,10 @@
 package com.Mod.Client.command.Commands;
 
+import com.Mod.Client.SeedMod;
 import com.Mod.Client.command.Command;
 import com.Mod.api.util.chat.messages;
 import com.Mod.api.util.map.SimpleBlockMap;
+import com.Mod.api.util.render.RenderUtil;
 import com.Mod.api.util.render.SeedModColor;
 import com.seedfinding.mcbiome.biome.Biome;
 import com.seedfinding.mcbiome.biome.Biomes;
@@ -21,7 +23,6 @@ import java.util.Map;
 @Command.Declaration(name = "SeedOverlay", syntax ="so [seed]", alias = {"so", "seedoverlay"})
 public class ShowWorldChanges extends Command {
     private static Map<BlockPos.MutableBlockPos,String> boxes = new HashMap<>();
-    SeedModColor containerColor = new SeedModColor(255, 255, 0, 100);
 
     /*use these as a reference
     https://github.com/seedfinding/mc_terrain_java
@@ -40,18 +41,10 @@ public class ShowWorldChanges extends Command {
             return;
         }
         setEnabled(true);
-        messages.sendCommandMessage("Seed: " + seed, true);
-        showChanges("-4684036758601247941");
-        setEnabled(false);
-    }
-
-    /*
-    * xpple for basis of showChanges
-     */
-    private static int showChanges(String seed) {
-        // before we implement rendering we should just print the missing blocks and their coordinates to the chat
         messages.sendCommandMessage("1.12 Seed Overlay Started", true);
+        boxes.clear();
 
+        SeedModColor containerColor = new SeedModColor(255, 255, 0, 100);
         final int AIR_ID = com.seedfinding.mccore.block.Blocks.AIR.getId();
         BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
         TerrainGenerator generator = TerrainGenerator.of(returnPlayerDim(), biomeSource);
@@ -92,10 +85,13 @@ public class ShowWorldChanges extends Command {
         }
         if (blocks > 0) {
             messages.sendCommandMessage(blocks + " do not match", true);
+            SeedMod.logger.info(boxes);
+            boxes.forEach((key, value) -> RenderUtil.drawBoundingBox(mc.world.getBlockState(key).getSelectedBoundingBox(mc.world, key), 2, containerColor));
         }
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
-        return blocks;
+        setEnabled(false);
     }
+
     private static Dimension returnPlayerDim(){
         Dimension playerDim = Dimension.OVERWORLD;
 
