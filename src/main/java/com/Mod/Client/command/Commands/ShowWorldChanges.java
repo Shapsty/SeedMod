@@ -1,11 +1,8 @@
 package com.Mod.Client.command.Commands;
 
-import com.Mod.Client.SeedMod;
 import com.Mod.Client.command.Command;
-
 import com.Mod.api.util.chat.messages;
 import com.Mod.api.util.map.SimpleBlockMap;
-import com.Mod.api.util.render.RenderUtil;
 import com.Mod.api.util.render.SeedModColor;
 import com.seedfinding.mcbiome.biome.Biome;
 import com.seedfinding.mcbiome.biome.Biomes;
@@ -13,7 +10,6 @@ import com.seedfinding.mcbiome.source.BiomeSource;
 import com.seedfinding.mccore.state.Dimension;
 import com.seedfinding.mccore.version.MCVersion;
 import com.seedfinding.mcterrain.TerrainGenerator;
-
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -24,6 +20,9 @@ import java.util.Map;
 
 @Command.Declaration(name = "SeedOverlay", syntax ="so [seed]", alias = {"so", "seedoverlay"})
 public class ShowWorldChanges extends Command {
+    private static Map<BlockPos.MutableBlockPos,String> boxes = new HashMap<>();
+    SeedModColor containerColor = new SeedModColor(255, 255, 0, 100);
+
     /*use these as a reference
     https://github.com/seedfinding/mc_terrain_java
     https://github.com/SeedFinding/mc_core_java
@@ -55,7 +54,6 @@ public class ShowWorldChanges extends Command {
 
         final int AIR_ID = com.seedfinding.mccore.block.Blocks.AIR.getId();
         BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
-        SeedModColor containerColor = new SeedModColor(255, 255, 0, 100);
         TerrainGenerator generator = TerrainGenerator.of(returnPlayerDim(), biomeSource);
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         final BlockPos center = new BlockPos(mc.player.getPosition());
@@ -63,7 +61,6 @@ public class ShowWorldChanges extends Command {
         final Chunk chunk = mc.world.getChunk(center.getX() >> 4, center.getZ() >> 4);
         final ChunkPos chunkPos = chunk.getPos();
 
-        Map<BlockPos.MutableBlockPos,String> boxes = new HashMap<>();
         int blocks = 0;
 
         for (int x = chunkPos.getXStart(); x <= chunkPos.getXEnd(); x++) {
@@ -88,7 +85,6 @@ public class ShowWorldChanges extends Command {
                         continue;
                     }
                     boxes.put(mutable, terrainBlockName);
-                    SeedMod.logger.info(boxes);
                     messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
                     blocks++;
                 }
@@ -96,7 +92,6 @@ public class ShowWorldChanges extends Command {
         }
         if (blocks > 0) {
             messages.sendCommandMessage(blocks + " do not match", true);
-            boxes.forEach((key, value) -> RenderUtil.drawBoundingBox(mc.world.getBlockState(key).getSelectedBoundingBox(mc.world, key), 2, containerColor));
         }
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
         return blocks;

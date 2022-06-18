@@ -1,5 +1,6 @@
 package com.Mod.Client.command;
 
+import com.Mod.api.event.events.RenderEvent;
 import net.minecraft.client.Minecraft;
 
 import java.lang.annotation.ElementType;
@@ -50,6 +51,10 @@ public abstract class Command {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public void onWorldRender(RenderEvent event) {
+
     }
 
     public abstract void onCommand(String command, String[] message);
