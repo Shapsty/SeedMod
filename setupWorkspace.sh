@@ -16,4 +16,4 @@ echo "Generating InteliJ runs"
   exit 1
 }
 
-echo "Build succeeded in $((SECONDS / 60)) minutes and $((SECONDS % 60)) seconds! All checks passed, you can build normally now! Welcome to Lambda."
+echo "Build succeeded in $((SECONDS / 60)) minutes and $((SECONDS % 60)) seconds! All checks passed, you can build normally now!"
