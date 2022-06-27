@@ -7,7 +7,6 @@ import com.Mod.Client.command.Commands.ShowWorldChanges;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CommandManager {
     public static String COMMANDPREFIX = ";";

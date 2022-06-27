@@ -1,9 +1,9 @@
 package com.Mod.Client.command.Commands;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
-
 import com.Mod.Client.command.Command;
 import com.Mod.Client.command.CommandManager;
+import com.mojang.realmsclient.gui.ChatFormatting;
+
 import com.Mod.api.util.chat.messages;
 
 @Command.Declaration(name = "Prefix", syntax = "prefix value (no letters or numbers)", alias = {"prefix", "p"})
