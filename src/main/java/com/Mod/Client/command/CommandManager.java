@@ -9,7 +9,7 @@ import net.minecraftforge.common.MinecraftForge;
 import java.util.ArrayList;
 
 public class CommandManager {
-    public static String COMMANDPREFIX = ";";
+    public static String COMMANDPREFIX = "~";
     public static final ArrayList<Command> commands = new ArrayList<>();
 
     public CommandManager(){
