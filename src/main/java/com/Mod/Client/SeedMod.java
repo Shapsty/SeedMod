@@ -5,6 +5,7 @@ import com.Mod.Client.manager.managerLoader;
 import com.Mod.Client.module.ModuleManager;
 import me.zero.alpine.EventBus;
 import me.zero.alpine.EventManager;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -16,6 +17,7 @@ import org.lwjgl.opengl.Display;
 
 @Mod(modid = SeedMod.MODID, name = SeedMod.NAME, version = SeedMod.VERSION, dependencies = "required-after:forge@[14.23.5.2860,);")
 public class SeedMod  {
+    private static final Minecraft mc = Minecraft.getMinecraft();
     public static final String MODID = "seedmod";
     public static final String NAME = "Seed Mod";
     public static final String VERSION = "b.77";
@@ -38,7 +40,7 @@ public class SeedMod  {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
-        Display.setTitle(NAME + " " + VERSION);
+        Display.setTitle(NAME + " " + VERSION + " - " +  mc.getSession().getUsername());
 
         logger.info("Starting up " + NAME + " " + VERSION);
 
