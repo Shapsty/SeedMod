@@ -2,7 +2,6 @@ package com.Mod.Client;
 
 import com.Mod.Client.command.CommandManager;
 import com.Mod.Client.manager.managerLoader;
-import com.Mod.Client.module.ModuleManager;
 import me.zero.alpine.EventBus;
 import me.zero.alpine.EventManager;
 import net.minecraft.client.Minecraft;
@@ -24,7 +23,6 @@ public class SeedMod  {
 
     public static managerLoader managerLoad;
     public static CommandManager CommandManager;
-    public static ModuleManager moduleManager;
 
     public static final EventBus EVENT_BUS = new EventManager();
 
@@ -46,9 +44,6 @@ public class SeedMod  {
 
         CommandManager = new CommandManager();
         logger.info("Finished initialization for commandManager");
-
-        moduleManager = new ModuleManager();
-        logger.info("Finished initialization for ModuleManager");
 
         managerLoad = new managerLoader();
         logger.info("Finished initialization for commandManager");
