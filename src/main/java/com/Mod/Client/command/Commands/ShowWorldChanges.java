@@ -51,7 +51,7 @@ public class ShowWorldChanges extends Command {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         final BlockPos center = new BlockPos(mc.player.getPosition());
         final SimpleBlockMap map = new SimpleBlockMap(MCVersion.v1_12_2, returnPlayerDim(), Biomes.PLAINS);
-        final Chunk chunk = mc.world.getChunk(center.getX() >> 4, center.getZ() >> 4);
+        final Chunk chunk = mc.world.getChunkFromChunkCoords(center.getX() >> 4, center.getZ() >> 4);
         final ChunkPos chunkPos = chunk.getPos();
 
         int blocks = 0;
@@ -68,7 +68,7 @@ public class ShowWorldChanges extends Command {
                     mutable.setPos(x, y, z);
 
                     final Block terrainBlock = chunk.getBlockState(mutable).getBlock();
-                    String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getPath();
+                    String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getResourcePath();
 
                     if (map.get(terrainBlock) == column[y].getId()) {
                         continue;
