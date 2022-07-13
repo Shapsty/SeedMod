@@ -4,6 +4,7 @@ import com.Mod.Client.command.Command;
 import com.Mod.Client.command.CommandManager;
 import com.Mod.Client.manager.Manager;
 import com.Mod.api.util.chat.messages;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -22,6 +23,7 @@ public enum ClientEventManager implements Manager {
             return;
         }
         event.setCanceled(true);
+        Minecraft.getMinecraft().ingameGUI.getChatGUI().addToSentMessages(message);
         message = message.substring(CommandManager.COMMANDPREFIX.length());
 
         if(message.split(" ").length > 0) {
