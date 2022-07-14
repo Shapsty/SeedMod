@@ -43,7 +43,6 @@ public class SimpleBlockMap {
                             .put(RED_FLOWER, AIR_ID)
 
                             .put(TALLGRASS, AIR_ID)
-                            .put(AIR, CAVEAIR_ID)
                             .build()
                     ).put(DESERT, ImmutableMap.<Block, Integer>builder()
                             .put(SAND, STONE_ID)

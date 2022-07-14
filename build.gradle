@@ -22,14 +22,11 @@ apply plugin: 'maven-publish'
 
 version = project.modVersion
 group = project.modGroup // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'modid'
 
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
     options.encoding = 'UTF-8'
 }
-
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 
 repositories {
@@ -63,15 +60,6 @@ minecraft {
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
         }
-
-//        server {
-//
-//            // Recommended logging data for a userdev environment
-//            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-//
-//            // Recommended logging level for the console
-//            property 'forge.logging.console.level', 'debug'
-//        }
     }
 }
 

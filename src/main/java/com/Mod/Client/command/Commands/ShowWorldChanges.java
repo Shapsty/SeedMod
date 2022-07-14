@@ -64,21 +64,28 @@ public class ShowWorldChanges extends Command {
 
                 map.setBiome(biome);
 
+                int originalBlock, currentBlock;
                 for (int y = 0; y < column.length; y++) {
                     mutable.setPos(x, y, z);
 
                     final Block terrainBlock = chunk.getBlockState(mutable).getBlock();
                     String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getResourcePath();
 
-                    if (map.get(terrainBlock) == column[y].getId()) {
+                    originalBlock = map.get(terrainBlock);
+                    currentBlock = column[y].getId();
+
+                    if (originalBlock == currentBlock) {
                         continue;
                     }
                     //temp fix while I figure out how to use predicates On Maps or alternate how terrain generates
-                    if (map.get(terrainBlock) == AIR_ID && mutable.getY() <= 40){
+//                    if (map.get(terrainBlock) == AIR_ID && mutable.getY() <= 40){
+//                        continue;
+//                    }
+                    if(originalBlock == 0 && currentBlock == 1) {
                         continue;
                     }
                     boxes.put(mutable, terrainBlockName);
-                    messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
+                    messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName + "(" + map.get(terrainBlock) +"=>" + column[y].getId() + ")", true);
                     blocks++;
                 }
             }
