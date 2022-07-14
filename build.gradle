@@ -76,14 +76,14 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
         }
 
-        server {
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-        }
+//        server {
+//
+//            // Recommended logging data for a userdev environment
+//            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+//
+//            // Recommended logging level for the console
+//            property 'forge.logging.console.level', 'debug'
+//        }
     }
 }
 
@@ -95,9 +95,9 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+    minecraft "net.minecraftforge:forge:$minecraftVersion-$forgeVersion"
 
-    jarLibs('org.spongepowered:mixin:0.8.5') {
+    jarLibs('org.spongepowered:mixin:0.8.2') {
         exclude module: 'commons-io'
         exclude module: 'gson'
         exclude module: 'guava'
