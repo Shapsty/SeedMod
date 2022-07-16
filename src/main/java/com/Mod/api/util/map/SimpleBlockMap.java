@@ -19,6 +19,7 @@ public class SimpleBlockMap {
      * xpple for basically this entire file I only changed a few things
      */
     private static final int AIR_ID = Blocks.AIR.getId();
+    private static final int CAVEAIR_ID = Blocks.CAVE_AIR.getId();
     private static final int STONE_ID = Blocks.STONE.getId();
     private static final int END_STONE_ID = Blocks.END_STONE.getId();
     private static final int NETHERRACK_ID = Blocks.NETHERRACK.getId();

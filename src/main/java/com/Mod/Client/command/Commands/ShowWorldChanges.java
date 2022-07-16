@@ -51,7 +51,7 @@ public class ShowWorldChanges extends Command {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         final BlockPos center = new BlockPos(mc.player.getPosition());
         final SimpleBlockMap map = new SimpleBlockMap(MCVersion.v1_12_2, returnPlayerDim(), Biomes.PLAINS);
-        final Chunk chunk = mc.world.getChunk(center.getX() >> 4, center.getZ() >> 4);
+        final Chunk chunk = mc.world.getChunkFromChunkCoords(center.getX() >> 4, center.getZ() >> 4);
         final ChunkPos chunkPos = chunk.getPos();
 
         int blocks = 0;
@@ -64,21 +64,28 @@ public class ShowWorldChanges extends Command {
 
                 map.setBiome(biome);
 
+                int originalBlock, currentBlock;
                 for (int y = 0; y < column.length; y++) {
                     mutable.setPos(x, y, z);
 
                     final Block terrainBlock = chunk.getBlockState(mutable).getBlock();
-                    String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getPath();
+                    String terrainBlockName = Block.REGISTRY.getNameForObject(terrainBlock).getResourcePath();
 
-                    if (map.get(terrainBlock) == column[y].getId()) {
+                    originalBlock = map.get(terrainBlock);
+                    currentBlock = column[y].getId();
+
+                    if (originalBlock == currentBlock) {
                         continue;
                     }
                     //temp fix while I figure out how to use predicates On Maps or alternate how terrain generates
-                    if (map.get(terrainBlock) == AIR_ID && mutable.getY() <= 40){
+//                    if (map.get(terrainBlock) == AIR_ID && mutable.getY() <= 40){
+//                        continue;
+//                    }
+                    if(originalBlock == 0 && currentBlock == 1) {
                         continue;
                     }
                     boxes.put(mutable, terrainBlockName);
-                    //messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName, true);
+                    messages.sendCommandMessage("Block at " + "X: " +mutable.getX() + " Y: " + mutable.getY()+ " Z: " + mutable.getZ() + " is " + terrainBlockName + "(" + map.get(terrainBlock) +"=>" + column[y].getId() + ")", true);
                     blocks++;
                 }
             }

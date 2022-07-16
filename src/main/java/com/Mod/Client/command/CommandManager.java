@@ -2,6 +2,7 @@ package com.Mod.Client.command;
 
 import com.Mod.Client.SeedMod;
 import com.Mod.Client.command.Commands.CmdListCommand;
+import com.Mod.Client.command.Commands.GetBlock;
 import com.Mod.Client.command.Commands.PrefixCommand;
 import com.Mod.Client.command.Commands.ShowWorldChanges;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,6 +21,7 @@ public class CommandManager {
         addCommand(new ShowWorldChanges());
         addCommand(new PrefixCommand());
         addCommand(new CmdListCommand());
+        addCommand(new GetBlock());
     }
 
     public static void addCommand(Command command) {

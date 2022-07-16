@@ -1,6 +1,3 @@
-//basically skidded from https://github.com/lambda-client/lambda/blob/master/build.gradle because I dont understand gradle,
-//this probably the source of all my problems
-
 buildscript {
     repositories {
         mavenCentral()
@@ -12,21 +9,25 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:4.+'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
-version project.modVersion
-group project.modGroup
+version = project.modVersion
+group = project.modGroup // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
     options.encoding = 'UTF-8'
 }
+
 
 repositories {
     maven {
@@ -34,6 +35,9 @@ repositories {
     }
     maven {
         url 'https://nexus.seedfinding.com/repository/maven-seedfinding-snapshots'
+    }
+    maven {
+        url 'https://mod-buildcraft.com/maven/'
     }
     maven {
         name = 'impactdevelopment-repo'
@@ -45,7 +49,7 @@ repositories {
 }
 
 minecraft {
-    mappings channel: "$mappingsChannel", version: "$mappingsVersion"
+    mappings channel: 'snapshot', version: '20171003-1.12'
 
     runs {
         client {
@@ -62,20 +66,21 @@ minecraft {
 configurations {
     jarLibs
 }
+
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:$minecraftVersion-$forgeVersion"
 
-    jarLibs('org.spongepowered:mixin:0.8.5') {
+    jarLibs('org.spongepowered:mixin:0.8.2') {
         exclude module: 'commons-io'
         exclude module: 'gson'
         exclude module: 'guava'
     }
     jarLibs  "com.github.ZeroMemes:Alpine:1.5"
 
-    // Hacky way to get mixin work
+    // Hacky way to get mixins to work
     annotationProcessor('org.spongepowered:mixin:0.8.5:processor') {
         exclude module: 'gson'
     }
@@ -85,9 +90,6 @@ dependencies {
     jarLibs('com.seedfinding:mc_core:d685a37f0a466d4bf800e7f285daf9ef73c81678')
 
     implementation configurations.jarLibs
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
 }
 
 mixin {
@@ -98,6 +100,7 @@ mixin {
         }
     }
 }
+
 processResources {
     exclude '**/rawimagefiles'
 
@@ -112,7 +115,7 @@ task sourceJar(type: Jar) { // Generate sources
     group 'build'
     description 'Assemble API library source archive'
 
-    archiveClassifier.set 'api-source'
+    classifier 'api-source'
     from sourceSets.main.allSource
 }
 
@@ -120,10 +123,11 @@ task apiJar(type: Jar) {
     group 'build'
     description 'Assemble API library archive'
 
-    archiveClassifier.set 'api'
+    classifier 'api'
     from sourceSets.main.output
 }
 
+// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
         attributes(
