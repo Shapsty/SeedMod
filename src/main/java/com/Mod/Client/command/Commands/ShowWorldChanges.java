@@ -29,7 +29,6 @@ public class ShowWorldChanges extends Command {
     https://github.com/SeedFinding/mc_core_java
      */
 
-
     //main seed overlay command thing
     @Override
     public void onCommand(String command, String[] message) {
@@ -43,10 +42,11 @@ public class ShowWorldChanges extends Command {
         setEnabled(true);
         messages.sendCommandMessage("1.12 Seed Overlay Started", true);
         boxes.clear();
+        final String fiveBfiveTSeed = "-2469096471405889707";
 
         SeedModColor containerColor = new SeedModColor(255, 255, 0, 100);
         final int AIR_ID = com.seedfinding.mccore.block.Blocks.AIR.getId();
-        BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(seed));
+        BiomeSource biomeSource = BiomeSource.of(returnPlayerDim(), MCVersion.v1_12_2, Long.parseLong(fiveBfiveTSeed));
         TerrainGenerator generator = TerrainGenerator.of(returnPlayerDim(), biomeSource);
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         final BlockPos center = new BlockPos(mc.player.getPosition());
@@ -94,6 +94,8 @@ public class ShowWorldChanges extends Command {
             messages.sendCommandMessage(blocks + " do not match", true);
             SeedMod.logger.info(boxes);
             boxes.forEach((key, value) -> RenderUtil.drawBoundingBox(mc.world.getBlockState(key).getSelectedBoundingBox(mc.world, key), 2, containerColor));
+        } else{
+            messages.sendCommandMessage("No blocks have changed", true);
         }
         messages.sendCommandMessage("1.12 Seed Overlay Complete", true);
         setEnabled(false);

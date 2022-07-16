@@ -8,9 +8,10 @@ public class messages {
     protected static final Minecraft mc = Minecraft.getMinecraft();
 
     public static void sendCommandMessage(String message, boolean prefix){
-            String watermark1 = prefix ? ChatFormatting.LIGHT_PURPLE + "[" + mc.player.getName() + "] " : "";
-            TextComponentString string = new TextComponentString(watermark1 + ChatFormatting.LIGHT_PURPLE + message);
+        String playerName = prefix ? ChatFormatting.LIGHT_PURPLE + "[" + mc.player.getName() + "]": "";
+        String watermark1 = prefix ? ChatFormatting.LIGHT_PURPLE + "[Seed Mod] " : "";
+        TextComponentString string = new TextComponentString(watermark1 + ChatFormatting.LIGHT_PURPLE + message);
 
-            mc.player.sendMessage(string);
+        mc.player.sendMessage(string);
     }
 }
