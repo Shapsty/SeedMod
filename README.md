@@ -1,4 +1,5 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/Shappybappy/SeedMod?color=lightcoral&label=lines%20of%20code)
+![GitHub repo size](https://img.shields.io/github/repo-size/Shapsty/SeedMod)
 
 # SeedMod
 
