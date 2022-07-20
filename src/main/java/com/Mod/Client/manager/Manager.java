@@ -18,5 +18,5 @@ public interface Manager {
         return getMinecraft().world;
     }
 
-    default Profiler getProfiler() {return getMinecraft().mcProfiler;}
+    default Profiler getProfiler() {return getMinecraft().profiler;}
 }

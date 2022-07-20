@@ -9,7 +9,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:4.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
@@ -73,7 +73,7 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:$minecraftVersion-$forgeVersion"
 
-    jarLibs('org.spongepowered:mixin:0.8.2') {
+    jarLibs('org.spongepowered:mixin:0.8.5') {
         exclude module: 'commons-io'
         exclude module: 'gson'
         exclude module: 'guava'
@@ -81,7 +81,7 @@ dependencies {
     jarLibs  "com.github.ZeroMemes:Alpine:1.5"
 
     // Hacky way to get mixins to work
-    annotationProcessor('org.spongepowered:mixin:0.8.2:processor') {
+    annotationProcessor('org.spongepowered:mixin:0.8.5:processor') {
         exclude module: 'gson'
     }
     jarLibs ('com.seedfinding:mc_terrain:9e937ddb838e28e79423c287fa18b1ce66f061d7')

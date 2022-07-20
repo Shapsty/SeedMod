@@ -39,7 +39,7 @@ public class GetBlock extends Command {
 
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         final BlockPos center = new BlockPos(mc.player.getPosition());
-        final Chunk chunk = mc.world.getChunkFromChunkCoords(center.getX() >> 4, center.getZ() >> 4);
+        final Chunk chunk = mc.world.getChunk(center.getX() >> 4, center.getZ() >> 4);
         final Block terrainBlock = chunk.getBlockState(mutable).getBlock();
         currentBlock = generator.getColumnAt(pos.getX(), pos.getZ())[pos.getY()].getId();
         originalBlock = map.get(terrainBlock);
